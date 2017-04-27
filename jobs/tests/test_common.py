@@ -33,6 +33,7 @@ def test_decoding_whole_string_from_tvinna():
 
 
 def test_decoding_whole_string_from_mbl():
+    # TODO: these tests will fail when we get into 2018; need to mock the date
     assert decode_date_string(u'1. ma\u00ed.') == '2017-05-01'
     assert decode_date_string(u'10. ma\u00ed.') == '2017-05-10'
     assert decode_date_string(u'16. apr.') == '2017-04-16'
