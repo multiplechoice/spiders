@@ -45,8 +45,6 @@ def test_nonetype():
 
 
 def test_string_rather_than_unicode_input():
-    # the regex isn't configured to parse the unicode string (\u00ed) and so we will
-    # generate an exception here since we're trying to access the .groups() attribute
-    # on the NoneType instance thats returned from the non-matching regular expression
-    with pytest.raises(AttributeError):
-        decode_date_string('27. apr\u00edl 2011')
+    # if a string is passed in that is not unicode, it won't be handled correctly by
+    # the regex so instead we just return, indicating that something isn't right
+    assert decode_date_string('27. apr\u00edl 2011') is None

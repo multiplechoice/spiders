@@ -38,7 +38,12 @@ def decode_date_string(date_string=None):
         # for when the input is None, re simply return
         return
 
-    regex = re.compile(r'(?P<date>\d+). (?P<month>\w+)([. ]?)(?P<year>\d+)?', re.UNICODE)
+    if not isinstance(date_string, unicode):
+        # only support unicode strings, the theory being that they will properly represent characters
+        # and thus match when the regex is used
+        return
+
+    regex = re.compile(r'(?P<date>\d+). (?P<month>\w+)([. ]+)?(?P<year>\d+)?', re.UNICODE)
     match = regex.match(date_string)
     date = int(match.group('date'))
     month = translate_month(match.group('month'))
