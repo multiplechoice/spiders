@@ -19,9 +19,7 @@ def test_month_lookups():
 
 
 def test_unknown_month():
-    # since we're doing list indexing, we should get a ValueError here
-    with pytest.raises(ValueError):
-        translate_month('January')
+    assert translate_month('January') is None
 
 
 def test_decoding_whole_string_from_tvinna():
