@@ -1,7 +1,31 @@
+import re
+
 import scrapy
 
 from jobs.common import decode_date_string
 from jobs.items import JobsItem
+
+
+def get_page_id(page_title):
+    """
+    Extracts the page id from the page title
+
+    Args:
+        page_title (unicode): page title
+
+    Returns:
+        int: page id
+
+    Examples:
+        >>> get_page_id(u'Tvinna \u2013 Page 21')
+        21
+    """
+    regex = re.compile(r'\d+')
+    match = regex.search(page_title)
+    if match is None:
+        # the front page doesn't have the page # in it's title
+        return 1
+    return int(match.group(0))
 
 
 class TvinnaSpider(scrapy.Spider):
@@ -25,5 +49,6 @@ class TvinnaSpider(scrapy.Spider):
             yield item
 
         next_page = response.css('div.next-link a::attr(href)').extract_first()
-        if next_page is not None:
+        page_id = get_page_id(response.css('title::text').extract_first())
+        if next_page is not None and page_id <= 3:
             yield scrapy.Request(next_page, callback=self.parse)
