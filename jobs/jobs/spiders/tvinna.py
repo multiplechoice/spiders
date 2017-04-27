@@ -68,7 +68,7 @@ class TvinnaSpider(scrapy.Spider):
             item['title'] = job.css('a h2::text').extract_first(),
             item['company'] = job.css('a p::text').extract_first().strip(),
             item['url'] = job.css('a::attr(href)').extract_first(),
-            item['posted'] = job.css('span.year::text').extract_first(),
+            item['posted'] = decode_date_string(job.css('span.year::text').extract_first()),
             item['views'] = job.css('span.view-track::text').extract_first().strip()
             yield item
 
