@@ -1,5 +1,7 @@
 import scrapy
+
 from jobs.items import JobsItem
+from jobs.common import decode_date_string
 
 
 class MblSpider(scrapy.Spider):
@@ -18,5 +20,5 @@ class MblSpider(scrapy.Spider):
             item['title'] = job.css('.title::text').extract_first(),
             item['company'] = job.css('div.company-wrapper span.company::text').extract_first(),
             item['url'] = response.urljoin(job.css('a::attr(href)').extract_first()),
-            item['deadline'] = job.css('span.date::text').extract_first(),
+            item['deadline'] = decode_date_string(job.css('span.date::text').extract_first()),
             yield item

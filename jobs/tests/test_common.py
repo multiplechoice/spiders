@@ -1,6 +1,6 @@
 import pytest
 
-from jobs.spiders.tvinna import decode_date_string, translate_month
+from jobs.common import decode_date_string, translate_month
 
 
 def test_month_lookups():
@@ -24,7 +24,7 @@ def test_unknown_month():
         translate_month('January')
 
 
-def test_decoding_whole_string():
+def test_decoding_whole_string_from_tvinna():
     assert decode_date_string(u'27. apr\u00edl 2011') == '2011-04-27'
     assert decode_date_string(u'30. \u00e1g\u00fast 2013') == '2013-08-30'
     assert decode_date_string(u'9. ma\u00ed 2014') == '2014-05-09'
@@ -32,6 +32,17 @@ def test_decoding_whole_string():
     assert decode_date_string(u'3. n\u00f3v. 2014') == '2014-11-03'
     assert decode_date_string(u'3. feb. 2015') == '2015-02-03'
     assert decode_date_string(u'29. feb. 2016') == '2016-02-29'
+
+
+def test_decoding_whole_string_from_mbl():
+    assert decode_date_string(u'1. ma\u00ed.') == '2017-05-01'
+    assert decode_date_string(u'10. ma\u00ed.') == '2017-05-10'
+    assert decode_date_string(u'16. apr.') == '2017-04-16'
+
+
+def test_nonetype():
+    # sometimes dates are expected but are empty, meaning we pass a None to the decode function
+    assert decode_date_string(None) is None
 
 
 def test_string_rather_than_unicode_input():
