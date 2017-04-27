@@ -7,7 +7,7 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - pip install coveralls
+  - pip install coveralls pytest-cov
 
 script:
   - pytest --doctest-modules --doctest-report ndiff jobs
