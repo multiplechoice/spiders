@@ -4,18 +4,18 @@ from jobs.spiders.tvinna import decode_date_string, translate_month
 
 
 def test_month_lookups():
-    assert translate_month(u'jan.') == 1
-    assert translate_month(u'feb.') == 2
+    assert translate_month(u'jan') == 1
+    assert translate_month(u'feb') == 2
     assert translate_month(u'mars') == 3
     assert translate_month(u'apr\u00edl') == 4
     assert translate_month(u'ma\u00ed') == 5
     assert translate_month(u'j\u00fan\u00ed') == 6
     assert translate_month(u'j\u00fal\u00ed') == 7
     assert translate_month(u'\u00e1g\u00fast') == 8
-    assert translate_month(u'sept.') == 9
-    assert translate_month(u'okt.') == 10
-    assert translate_month(u'n\u00f3v.') == 11
-    assert translate_month(u'des.') == 12
+    assert translate_month(u'sept') == 9
+    assert translate_month(u'okt') == 10
+    assert translate_month(u'n\u00f3v') == 11
+    assert translate_month(u'des') == 12
 
 
 def test_unknown_month():

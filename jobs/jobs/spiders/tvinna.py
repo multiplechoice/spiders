@@ -5,18 +5,18 @@ import scrapy
 from jobs.items import JobsItem
 
 months = [
-    u'jan.',
-    u'feb.',
+    u'jan',
+    u'feb',
     u'mars',
     u'apr\u00edl',
     u'ma\u00ed',
     u'j\u00fan\u00ed',
     u'j\u00fal\u00ed',
     u'\u00e1g\u00fast',
-    u'sept.',
-    u'okt.',
-    u'n\u00f3v.',
-    u'des.',
+    u'sept',
+    u'okt',
+    u'n\u00f3v',
+    u'des',
 ]
 
 
@@ -32,7 +32,7 @@ def decode_date_string(date_string):
         '2011-04-27'
     
     """
-    date, localised_month, year = re.match(r'(\d+). ([\w.]+) (\d+)', date_string, re.UNICODE).groups()
+    date, localised_month, year = re.match(r'(\d+). (\w+)\.? (\d+)', date_string, re.UNICODE).groups()
     return '{}-{:02}-{:02}'.format(year, translate_month(localised_month), int(date))
 
 
@@ -46,7 +46,7 @@ def translate_month(month):
         int: month index starting from 1
     
     Examples:
-        >>> translate_month(u'jan.')
+        >>> translate_month(u'jan')
         1
     """
     return months.index(month) + 1
