@@ -29,7 +29,8 @@ def decode_date_string(date_string):
 
     Examples:
         >>> decode_date_string(u'27. apr\u00edl 2011')
-        '2011-04-27' 
+        '2011-04-27'
+    
     """
     date, localised_month, year = re.match(r'(\d+). ([\w.]+) (\d+)', date_string, re.UNICODE).groups()
     return '{}-{:02}-{:02}'.format(year, translate_month(localised_month), int(date))
