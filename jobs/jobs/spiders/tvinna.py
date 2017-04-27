@@ -21,3 +21,7 @@ class TvinnaSpider(scrapy.Spider):
             item['posted'] = job.css('span.year::text').extract_first(),
             item['views'] = job.css('span.view-track::text').extract_first().strip()
             yield item
+
+        next_page = response.css('div.next-link a::attr(href)').extract_first()
+        if next_page is not None:
+            yield scrapy.Request(next_page, callback=self.parse)
