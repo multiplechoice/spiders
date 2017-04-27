@@ -7,7 +7,7 @@ def decode_date_string(date_string):
     Re-parses the job.visir.is date strings into a ISO8601 compatible timestamp.
 
     Args:
-        date_string (unicode): unicode string with the date extracted from tvinna.is
+        date_string (unicode): unicode string with the date extracted from visir.is
 
     Examples:
         >>> decode_date_string(u'23.12.2015')
