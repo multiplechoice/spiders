@@ -1,5 +1,3 @@
-import pytest
-
 from jobs.common import decode_date_string, translate_month
 
 
