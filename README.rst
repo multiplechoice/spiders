@@ -5,7 +5,7 @@ Workplace
 
 Metasite for job listings.
 
-Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__ and `Vísir <https://job.visir.is/>`__ for job postings.
+Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__, `Vísir <https://job.visir.is/>`__ and `Alfreð <https://alfred.is/>`__ for job postings.
 
 .. |Build Status| image:: https://travis-ci.org/multiplechoice/workplace.svg?branch=master
    :target: https://travis-ci.org/multiplechoice/workplace
