@@ -4,6 +4,7 @@ import urlparse
 import scrapy
 
 from jobs.items import JobsItem
+from jobs.spiders.visir import decode_date_string
 
 
 class AlfredSpider(scrapy.Spider):
@@ -41,6 +42,6 @@ class AlfredSpider(scrapy.Spider):
         job = content['data']['attributes']
         item = response.meta['item']
         item['title'] = job['title']
-        item['posted'] = job['created']
-        item['deadline'] = job['deadline']
+        item['posted'] = decode_date_string(job['created'])
+        item['deadline'] = decode_date_string(job['deadline'])
         yield item
