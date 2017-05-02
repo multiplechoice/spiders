@@ -9,9 +9,11 @@ import scrapy
 
 
 def single_item_serializer(value):
-    # values are nested inside a list: (u'Viltu vaxa me\xf0 Alvogen?',)
+    # values are sometimes nested inside a list: (u'Viltu vaxa me\xf0 Alvogen?',)
     # so need to return just the fist value when serializing
-    return value[0]
+    if isinstance(value, (list, tuple)):
+        return value[0]
+    return value
 
 
 class JobsItem(scrapy.Item):
