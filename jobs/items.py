@@ -1,25 +1,11 @@
 # -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# http://doc.scrapy.org/en/latest/topics/items.html
-
 import scrapy
 
 
-def single_item_serializer(value):
-    # values are sometimes nested inside a list: (u'Viltu vaxa me\xf0 Alvogen?',)
-    # so need to return just the fist value when serializing
-    if isinstance(value, (list, tuple)):
-        return value[0]
-    return value
-
-
 class JobsItem(scrapy.Item):
-    title = scrapy.Field(serializer=single_item_serializer)
-    company = scrapy.Field(serializer=single_item_serializer)
-    url = scrapy.Field(serializer=single_item_serializer)
-    posted = scrapy.Field(serializer=single_item_serializer)
-    deadline = scrapy.Field(serializer=single_item_serializer)
+    title = scrapy.Field()
+    company = scrapy.Field()
+    url = scrapy.Field()
+    posted = scrapy.Field()
+    deadline = scrapy.Field()
     views = scrapy.Field(serializer=int)
