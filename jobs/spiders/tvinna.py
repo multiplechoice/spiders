@@ -44,5 +44,5 @@ class TvinnaSpider(scrapy.Spider):
 
         next_page = response.css('div.next-link a::attr(href)').extract_first()
         page_id = get_page_id(response.css('title::text').extract_first())
-        if next_page is not None and page_id <= 3:
+        if next_page is not None and page_id <= 2:
             yield scrapy.Request(next_page, callback=self.parse)
