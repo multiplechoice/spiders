@@ -6,13 +6,7 @@ from jobs.common import decode_date_string
 
 class MblSpider(scrapy.Spider):
     name = "mbl"
-
-    def start_requests(self):
-        urls = [
-            'http://www.mbl.is/atvinna/',
-        ]
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+    start_urls = ['http://www.mbl.is/atvinna/']
 
     def parse(self, response):
         for job in response.css('.item-wrapper'):

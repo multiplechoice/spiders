@@ -9,13 +9,7 @@ from jobs.spiders.visir import decode_date_string
 
 class AlfredSpider(scrapy.Spider):
     name = "alfred"
-
-    def start_requests(self):
-        urls = [
-            'https://api.alfred.is/api/v3/web/open/jobs?cat=0&limit=100&page=1',
-        ]
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+    start_urls = ['https://api.alfred.is/api/v3/web/open/jobs?cat=0&limit=100&page=1']
 
     def parse(self, response):
         # we're using an api rather than scraping a website so we need to grok the json response

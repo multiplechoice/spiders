@@ -20,13 +20,7 @@ def decode_date_string(date_string):
 
 class VisirSpider(scrapy.Spider):
     name = "visir"
-
-    def start_requests(self):
-        urls = [
-            'https://job.visir.is/',
-        ]
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+    start_urls = ['https://job.visir.is/']
 
     def parse(self, response):
         for job in response.css('.job'):

@@ -30,13 +30,7 @@ def get_page_id(page_title):
 
 class TvinnaSpider(scrapy.Spider):
     name = "tvinna"
-
-    def start_requests(self):
-        urls = [
-            'http://www.tvinna.is/',
-        ]
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+    start_urls = ['http://www.tvinna.is/']
 
     def parse(self, response):
         for job in response.css('.job-listing li a'):
