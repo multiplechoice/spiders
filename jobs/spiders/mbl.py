@@ -11,6 +11,7 @@ class MblSpider(scrapy.Spider):
     def parse(self, response):
         for job in response.css('.item-wrapper'):
             item = JobsItem()
+            item['spider'] = self.name
             item['title'] = job.css('.title::text').extract_first()
             item['company'] = job.css('div.company-wrapper span.company::text').extract_first()
             item['deadline'] = decode_date_string(job.css('span.date::text').extract_first())

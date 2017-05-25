@@ -3,6 +3,7 @@ import scrapy
 
 
 class JobsItem(scrapy.Item):
+    spider = scrapy.Field()
     title = scrapy.Field()
     company = scrapy.Field()
     url = scrapy.Field()

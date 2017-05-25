@@ -26,6 +26,7 @@ class VisirSpider(scrapy.Spider):
         for job in response.css('.job'):
             company, posted = job.css('.green::text').re(r'(.+)- Skr\xe1\xf0 (\d.+)')
             item = JobsItem()
+            item['spider'] = self.name
             item['title'] = job.css('.jobtitill::text').extract_first()
             item['company'] = company
             item['url'] = job.css('.jobtitill::attr(href)').extract_first()

@@ -23,6 +23,7 @@ class AlfredSpider(scrapy.Spider):
             company_id = job['relationships']['brand']['data']['id']
 
             item = JobsItem()
+            item['spider'] = self.name
             item['company'] = included_data[company_id]['attributes']['name']
             item['url'] = urlparse.urljoin('https://alfred.is/starf/', job_id)
 

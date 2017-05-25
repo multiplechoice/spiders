@@ -35,6 +35,7 @@ class TvinnaSpider(scrapy.Spider):
     def parse(self, response):
         for job in response.css('.job-listing li a'):
             item = JobsItem()
+            item['spider'] = self.name
             item['title'] = job.css('a h2::text').extract_first()
             item['company'] = job.css('a p::text').extract_first().strip()
             item['url'] = job.css('a::attr(href)').extract_first()
