@@ -37,6 +37,6 @@ class AlfredSpider(scrapy.Spider):
         job = content['data']['attributes']
         item = response.meta['item']
         item['title'] = job['title']
-        item['posted'] = decode_date_string(job['created'])
+        item['posted'] = decode_date_string(job['start'])
         item['deadline'] = decode_date_string(job['deadline'])
         yield item
