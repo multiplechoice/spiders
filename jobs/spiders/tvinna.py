@@ -1,49 +1,28 @@
-import re
+import dateutil.parser
+import scrapy.spiders
 
-import scrapy
-
-from jobs.common import decode_date_string
 from jobs.items import JobsItem
 
 
-def get_page_id(page_title):
-    """
-    Extracts the page id from the page title
+class TvinnaSpider(scrapy.spiders.XMLFeedSpider):
+    name = "tvinnafeed"
+    start_urls = ['http://www.tvinna.is/feed/?post_type=job_listing']
+    itertag = 'item'
+    namespaces = [
+        ('atom', 'http://www.w3.org/2005/Atom'),
+        ('content', 'http://purl.org/rss/1.0/modules/content/'),
+        ('dc', 'http://purl.org/dc/elements/1.1/'),
+        ('slash', 'http://purl.org/rss/1.0/modules/slash/'),
+        ('sy', 'http://purl.org/rss/1.0/modules/syndication/'),
+        ('wfw', 'http://wellformedweb.org/CommentAPI/'),
+    ]
 
-    Args:
-        page_title (unicode): page title
-
-    Returns:
-        int: page id
-
-    Examples:
-        >>> get_page_id(u'Tvinna \u2013 Page 21')
-        21
-    """
-    regex = re.compile(r'\d+')
-    match = regex.search(page_title)
-    if match is None:
-        # the front page doesn't have the page # in it's title
-        return 1
-    return int(match.group(0))
-
-
-class TvinnaSpider(scrapy.Spider):
-    name = "tvinna"
-    start_urls = ['http://www.tvinna.is/']
-
-    def parse(self, response):
-        for job in response.css('.job-listing li a'):
-            item = JobsItem()
-            item['spider'] = self.name
-            item['title'] = job.css('a h2::text').extract_first()
-            item['company'] = job.css('a p::text').extract_first().strip()
-            item['url'] = job.css('a::attr(href)').extract_first()
-            item['posted'] = decode_date_string(job.css('span.year::text').extract_first())
-            item['views'] = job.css('span.view-track::text').extract_first().strip()
-            yield item
-
-        next_page = response.css('div.next-link a::attr(href)').extract_first()
-        page_id = get_page_id(response.css('title::text').extract_first())
-        if next_page is not None and page_id <= 2:
-            yield scrapy.Request(next_page, callback=self.parse)
+    def parse_node(self, response, node):
+        item = JobsItem()
+        item['spider'] = self.name
+        item['title'] = node.xpath('title/text()').extract_first()
+        item['company'] = node.xpath('dc:creator/text()').extract_first()
+        item['url'] = node.xpath('link/text()').extract_first()
+        time_posted = node.xpath('pubDate/text()').extract_first()
+        item['posted'] = dateutil.parser.parse(time_posted).isoformat()
+        return item
