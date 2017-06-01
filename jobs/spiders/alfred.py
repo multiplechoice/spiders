@@ -1,10 +1,10 @@
 import json
 import urlparse
 
+import dateutil.parser
 import scrapy
 
 from jobs.items import JobsItem
-from jobs.spiders.visir import decode_date_string
 
 
 class AlfredSpider(scrapy.Spider):
@@ -38,5 +38,5 @@ class AlfredSpider(scrapy.Spider):
         item = response.meta['item']
         item['title'] = job['title']
         item['posted'] = job['start']
-        item['deadline'] = decode_date_string(job['deadline'])
+        item['deadline'] = dateutil.parser.parse(job['deadline']).isoformat()
         yield item
