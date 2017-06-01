@@ -1,6 +1,6 @@
 import dateutil.parser
 import scrapy
-import logging
+
 from jobs.items import JobsItem
 
 
