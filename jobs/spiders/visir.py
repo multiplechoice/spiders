@@ -1,6 +1,6 @@
 import dateutil.parser
 import scrapy
-
+import logging
 from jobs.items import JobsItem
 
 
@@ -16,7 +16,7 @@ class VisirSpider(scrapy.Spider):
             item['spider'] = self.name
             item['url'] = url = info.css('a::attr(href)').extract_first()
             timestamp = job.css('td::text').re(r'[\d.]+')[0]
-            self.log(timestamp)
+            self.log(timestamp, logging.INFO)
             item['posted'] = dateutil.parser.parse(timestamp, dayfirst=False).isoformat()
 
             request = scrapy.Request(url, callback=self.parse_specific_job)
