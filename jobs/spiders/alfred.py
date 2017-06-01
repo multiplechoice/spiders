@@ -37,6 +37,6 @@ class AlfredSpider(scrapy.Spider):
         job = content['data']['attributes']
         item = response.meta['item']
         item['title'] = job['title']
-        item['posted'] = job['start']
+        item['posted'] = dateutil.parser.parse(job['start']).isoformat()
         item['deadline'] = dateutil.parser.parse(job['deadline']).isoformat()
         yield item
