@@ -5,7 +5,7 @@ from jobs.items import JobsItem
 
 
 class TvinnaSpider(scrapy.spiders.XMLFeedSpider):
-    name = "tvinnafeed"
+    name = "tvinna"
     start_urls = ['http://www.tvinna.is/feed/?post_type=job_listing']
     itertag = 'item'
     namespaces = [
