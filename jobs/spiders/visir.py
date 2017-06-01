@@ -16,10 +16,7 @@ class VisirSpider(scrapy.Spider):
             item['spider'] = self.name
             item['url'] = url = info.css('a::attr(href)').extract_first()
             timestamp = job.css('td::text').re(r'[\d.]+')[0]
-            item['posted'] = dateutil.parser.parse(timestamp, dayfirst=False).isoformat()
-            
-            line = '%s -> %s (%s)' % (timestamp, item['posted'], item['url'])
-            self.log(line, logging.INFO)
+            item['posted'] = dateutil.parser.parse(timestamp, dayfirst=True).isoformat()
 
             request = scrapy.Request(url, callback=self.parse_specific_job)
             request.meta['item'] = item
