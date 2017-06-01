@@ -1,34 +1,32 @@
+import dateutil.parser
 import scrapy
+
 from jobs.items import JobsItem
-
-
-def decode_date_string(date_string):
-    """
-    Re-parses the job.visir.is date strings into a ISO8601 compatible timestamp.
-
-    Args:
-        date_string (unicode): unicode string with the date extracted from visir.is
-
-    Examples:
-        >>> decode_date_string(u'23.12.2015')
-        '2015-12-23'
-
-    """
-    date, month, year = date_string.split(u'.')
-    return '{}-{:02}-{:02}'.format(int(year), int(month), int(date))
 
 
 class VisirSpider(scrapy.Spider):
     name = "visir"
-    start_urls = ['https://job.visir.is/']
+    start_urls = ['https://job.visir.is/search-results-jobs/']
 
     def parse(self, response):
-        for job in response.css('.job'):
-            company, posted = job.css('.green::text').re(r'(.+)- Skr\xe1\xf0 (\d.+)')
+        for job in response.css('.thebox'):
+            info = job.css('a')[1]
+
             item = JobsItem()
             item['spider'] = self.name
-            item['title'] = job.css('.jobtitill::text').extract_first()
-            item['company'] = company
-            item['url'] = job.css('.jobtitill::attr(href)').extract_first()
-            item['posted'] = decode_date_string(posted)
-            yield item
+            item['url'] = url = info.css('a::attr(href)').extract_first()
+            item['posted'] = dateutil.parser.parse(job.css('td::text').re(r'[\d.]+')[0]).isoformat()
+
+            request = scrapy.Request(url, callback=self.parse_specific_job)
+            request.meta['item'] = item
+            yield request
+
+        next_page = response.urljoin(response.css('.nextBtn a::attr(href)').extract_first())
+        if next_page != response.url:
+            yield scrapy.Request(next_page, callback=self.parse)
+
+    def parse_specific_job(self, response):
+        item = response.meta['item']
+        item['company'] = response.css('.company-name::text').extract_first()
+        item['title'] = response.css('h2::text').extract_first()
+        yield item
