@@ -1,9 +1,9 @@
 |Build Status| |Coveralls Status| |Requirement Status|
 
-Workplace
-=========
+Spiders
+=======
 
-Metasite for job listings.
+Scrapy based spiders that crawl for job listings.
 
 Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__, `Vísir <https://job.visir.is/>`__ and `Alfreð <https://alfred.is/>`__ for job postings.
 
