@@ -2,4 +2,4 @@ Scrapy==1.4.0
 pytest==3.1.2
 pytest-cov==2.5.1
 python-dateutil==2.6.0
-git+https://github.com/multiplechoice/sqlalchemy-mappings.git
+git+https://github.com/multiplechoice/sqlalchemy-mappings.git@60a36c59ff7700b2975122874411f73f7a4041bc
