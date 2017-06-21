@@ -1,4 +1,5 @@
 import dateutil.parser
+import scrapy
 import scrapy.spiders
 
 from jobs.items import JobsItem
@@ -21,8 +22,15 @@ class TvinnaSpider(scrapy.spiders.XMLFeedSpider):
         item = JobsItem()
         item['spider'] = self.name
         item['title'] = node.xpath('title/text()').extract_first()
-        item['company'] = node.xpath('dc:creator/text()').extract_first()
-        item['url'] = node.xpath('link/text()').extract_first()
+        item['url'] = url = node.xpath('link/text()').extract_first()
         time_posted = node.xpath('pubDate/text()').extract_first()
         item['posted'] = dateutil.parser.parse(time_posted).isoformat()
-        return item
+
+        request = scrapy.Request(url, callback=self.parse_specific_job)
+        request.meta['item'] = item
+        yield request
+
+    def parse_specific_job(self, response):
+        item = response.meta['item']
+        item['company'] = response.css('.company a::text').extract_first()
+        yield item
