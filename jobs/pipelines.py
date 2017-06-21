@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from mappings import ScrapedJob
 from mappings.utils import session_scope
+from scrapy.exceptions import NotConfigured
 
 
 class PostgresPipeline(object):
@@ -11,6 +12,9 @@ class PostgresPipeline(object):
 
     @classmethod
     def from_crawler(cls, crawler):
+        if 'PG_CREDS' not in crawler.settings:
+            raise NotConfigured
+
         return cls(settings=crawler.settings, stats=crawler.stats)
 
     def open_spider(self, spider):
