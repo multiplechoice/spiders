@@ -9,4 +9,4 @@ class JobsItem(scrapy.Item):
     url = scrapy.Field()
     posted = scrapy.Field()
     deadline = scrapy.Field()
-    views = scrapy.Field(serializer=int)
+    description = scrapy.Field()

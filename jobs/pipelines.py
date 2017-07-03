@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from mappings import ScrapedJob
 from mappings.utils import session_scope
 from scrapy.exceptions import NotConfigured
@@ -9,6 +11,11 @@ class PostgresPipeline(object):
         self.credentials = settings.get('PG_CREDS')
         self.scope = session_scope(self.credentials)
         self.stats = stats
+
+    @property
+    def logger(self):
+        logger = logging.getLogger(self.__class__.__name__)
+        return logging.LoggerAdapter(logger, {'pipeline': self})
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -33,11 +40,10 @@ class PostgresPipeline(object):
             self.session.add(job)
             self.stats.inc_value('postgresql/add')
         else:
-            if job.posted < matched_job.posted:
-                # new record has an older timestamp
-                matched_job.data['posted'] = job.posted
-                # modifying the existing record will cause it to be marked as dirty
-                # so when the session is committed it will emit an UPDATE for the row
+            if job.data != matched_job.data:
+                # the scraped data is different
+                matched_job.data = job.data
+                self.logger.info('Replacing %r with %r', matched_job.data, job.data)
                 self.stats.inc_value('postgresql/modify')
             else:
                 self.stats.inc_value('postgresql/ignore')

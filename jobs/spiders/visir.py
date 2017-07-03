@@ -3,6 +3,7 @@ import urlparse
 import dateutil.parser
 import scrapy
 
+from jobs.common import clean_html
 from jobs.items import JobsItem
 
 
@@ -37,4 +38,5 @@ class VisirSpider(scrapy.Spider):
         item = response.meta['item']
         item['company'] = response.css('.company-name::text').extract_first()
         item['title'] = response.css('h2::text').extract_first()
+        item['description'] = clean_html(response.css('div.displayField').extract())
         yield item

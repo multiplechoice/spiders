@@ -1,4 +1,6 @@
 import datetime
+
+import bleach
 import re
 
 months = {
@@ -73,3 +75,17 @@ def translate_month(month):
     for key, values in months.iteritems():
         if month in values:
             return key
+
+
+def clean_html(input_html):
+    allowed_tags = bleach.sanitizer.ALLOWED_TAGS + ['br']
+    cleaner = bleach.sanitizer.Cleaner(tags=allowed_tags, strip=True, strip_comments=True)
+    cleaned_lines = []
+
+    if isinstance(input_html, (list, tuple)):
+        for line in input_html:
+            cleaned_lines.append(cleaner.clean(line).strip())
+    elif isinstance(input_html, basestring):
+        cleaned_lines.append(cleaner.clean(input_html).strip())
+
+    return '<br>'.join(cleaned_lines).replace('\n', '<br>')

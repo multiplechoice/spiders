@@ -1,7 +1,7 @@
 import scrapy
 
+from jobs.common import decode_date_string, clean_html
 from jobs.items import JobsItem
-from jobs.common import decode_date_string
 
 
 class MblSpider(scrapy.Spider):
@@ -26,4 +26,5 @@ class MblSpider(scrapy.Spider):
     def parse_specific_job(self, response):
         item = response.meta['item']
         item['posted'] = decode_date_string(response.css('.ad_created::text').re(r'Sett inn: (.+)')[0])
+        item['description'] = clean_html(response.css('.maintext-wrapper').extract())
         yield item

@@ -4,6 +4,7 @@ import urlparse
 import dateutil.parser
 import scrapy
 
+from jobs.common import clean_html
 from jobs.items import JobsItem
 
 
@@ -39,4 +40,5 @@ class AlfredSpider(scrapy.Spider):
         item['title'] = job['title']
         item['posted'] = dateutil.parser.parse(job['start']).isoformat()
         item['deadline'] = dateutil.parser.parse(job['deadline']).isoformat()
+        item['description'] = clean_html(job['body'])
         yield item
