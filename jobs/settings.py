@@ -65,8 +65,14 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'jobs.pipelines.PostgresPipeline': 300,
+    'jobs.pipelines.ImageDownloader': 1,
+    'jobs.pipelines.PostgresPipeline': 300,
 }
+
+FILES_STORE = 's3://multiplechoice/images/'
+FILES_RESULT_FIELD = 'images'
+FILES_STORE_S3_ACL = 'public-read'
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

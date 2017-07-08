@@ -4,6 +4,7 @@ import logging
 from mappings import ScrapedJob
 from mappings.utils import session_scope
 from scrapy.exceptions import NotConfigured
+from scrapy.pipelines.files import FilesPipeline
 
 
 class PostgresPipeline(object):
@@ -49,3 +50,15 @@ class PostgresPipeline(object):
                 self.stats.inc_value('postgresql/ignore')
 
         return item
+
+
+class ImageDownloader(FilesPipeline):
+    def item_completed(self, results, item, info):
+        completed_item = super(ImageDownloader, self).item_completed(results, item, info)
+        images = []
+        for image_details in completed_item[self.files_result_field]:
+            image_details['s3_path'] = \
+                'https://s3.eu-central-1.amazonaws.com/multiplechoice/images/' + image_details['path']
+            images.append(image_details)
+        completed_item[self.files_result_field] = images
+        return completed_item

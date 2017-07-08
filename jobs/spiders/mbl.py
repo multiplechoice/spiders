@@ -27,4 +27,12 @@ class MblSpider(scrapy.Spider):
         item = response.meta['item']
         item['posted'] = decode_date_string(response.css('.ad_created::text').re(r'Sett inn: (.+)')[0])
         item['description'] = clean_html(response.css('.maintext-wrapper').extract())
+
+        # some mbl items are just a title and an image, so we need to save the image and upload it to s3
+        # so that we can show it later without hot-linking issues
+        image_src = response.css('.img-responsive::attr(src)').extract_first()
+        if image_src is not None:
+            # adding to the `file_urls` causes this to be picked up by the FilesPipeline plugin
+            item['file_urls'] = [response.urljoin(image_src)]
+
         yield item
