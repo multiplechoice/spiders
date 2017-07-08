@@ -60,9 +60,12 @@ class S3FilesStore_V4(S3FilesStore):
     def __init__(self, uri):
         super(S3FilesStore_V4, self).__init__(uri)
         import botocore.session
+        from botocore.config import Config
+        config = Config(signature_version='s3v4', s3={'payload_signing_enabled': True})
         session = botocore.session.get_session()
         self.s3_client = session.create_client(
             's3',
+            config=config,
             aws_access_key_id=self.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=self.AWS_SECRET_ACCESS_KEY,
             region_name=self.AWS_DEFAULT_REGION
