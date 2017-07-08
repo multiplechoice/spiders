@@ -53,9 +53,20 @@ class PostgresPipeline(object):
 
 
 class S3FilesStore_V4(S3FilesStore):
+    AWS_ACCESS_KEY_ID = None
+    AWS_SECRET_ACCESS_KEY = None
+    AWS_DEFAULT_REGION = None
+
     def __init__(self, uri):
         super(S3FilesStore_V4, self).__init__(uri)
-        print('self.is_botocore:', self.is_botocore)
+        import botocore.session
+        session = botocore.session.get_session()
+        self.s3_client = session.create_client(
+            's3',
+            aws_access_key_id=self.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=self.AWS_SECRET_ACCESS_KEY,
+            region_name=self.AWS_DEFAULT_REGION
+        )
 
 
 class ImageDownloader(FilesPipeline):
@@ -64,6 +75,17 @@ class ImageDownloader(FilesPipeline):
         'file': FSFilesStore,
         's3': S3FilesStore_V4,
     }
+
+    @classmethod
+    def from_settings(cls, settings):
+        s3store = cls.STORE_SCHEMES['s3']
+        s3store.AWS_ACCESS_KEY_ID = settings['AWS_ACCESS_KEY_ID']
+        s3store.AWS_SECRET_ACCESS_KEY = settings['AWS_SECRET_ACCESS_KEY']
+        s3store.AWS_DEFAULT_REGION = settings['AWS_DEFAULT_REGION']
+        s3store.POLICY = settings['FILES_STORE_S3_ACL']
+
+        store_uri = settings['FILES_STORE']
+        return cls(store_uri, settings=settings)
 
     def item_completed(self, results, item, info):
         completed_item = super(ImageDownloader, self).item_completed(results, item, info)
