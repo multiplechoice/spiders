@@ -4,7 +4,7 @@ import logging
 from mappings import ScrapedJob
 from mappings.utils import session_scope
 from scrapy.exceptions import NotConfigured
-from scrapy.pipelines.files import FilesPipeline
+from scrapy.pipelines.files import FilesPipeline, S3FilesStore, FSFilesStore
 
 
 class PostgresPipeline(object):
@@ -52,7 +52,19 @@ class PostgresPipeline(object):
         return item
 
 
+class S3FilesStore_V4(S3FilesStore):
+    def __init__(self, uri):
+        super(S3FilesStore_V4, self).__init__(uri)
+        print('self.is_botocore:', self.is_botocore)
+
+
 class ImageDownloader(FilesPipeline):
+    STORE_SCHEMES = {
+        '': FSFilesStore,
+        'file': FSFilesStore,
+        's3': S3FilesStore_V4,
+    }
+
     def item_completed(self, results, item, info):
         completed_item = super(ImageDownloader, self).item_completed(results, item, info)
         images = []
