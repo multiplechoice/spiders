@@ -78,7 +78,7 @@ def translate_month(month):
 
 
 def clean_html(input_html):
-    allowed_tags = bleach.sanitizer.ALLOWED_TAGS + ['br']
+    allowed_tags = bleach.sanitizer.ALLOWED_TAGS + ['br', 'p']
     cleaner = bleach.sanitizer.Cleaner(tags=allowed_tags, strip=True, strip_comments=True)
     cleaned_lines = []
 
