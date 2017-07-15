@@ -88,4 +88,4 @@ def clean_html(input_html):
     elif isinstance(input_html, basestring):
         cleaned_lines.append(cleaner.clean(input_html).strip())
 
-    return '<br>'.join(cleaned_lines).replace('\n', '<br>')
+    return '<br>'.join(cleaned_lines)
