@@ -39,4 +39,10 @@ class VisirSpider(scrapy.Spider):
         item['company'] = response.css('.company-name::text').extract_first()
         item['title'] = response.css('h2::text').extract_first()
         item['description'] = clean_html(response.css('div.displayField').extract())
+
+        # sometimes visir items have an image/advert too
+        image_src = response.css('a.info-picture::attr(href)').extract_first()
+        if image_src is not None:
+            item['file_urls'] = [image_src]
+
         yield item
