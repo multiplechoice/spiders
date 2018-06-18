@@ -1,4 +1,4 @@
-|Build Status| |Coveralls Status| |Requirement Status|
+|Build Status| |Coveralls Status| |Updates|
 
 Spiders
 =======
@@ -15,6 +15,6 @@ This project relies upon the `multiplechoice/sqlalchemy-mappings` project to mai
   :target: https://travis-ci.org/multiplechoice/spiders
 .. |Coveralls Status| image:: https://coveralls.io/repos/github/multiplechoice/spiders/badge.svg?branch=master
   :target: https://coveralls.io/github/multiplechoice/spiders?branch=master
-.. |Requirement Status| image:: https://requires.io/github/multiplechoice/spiders/requirements.svg?branch=master
-  :target: https://requires.io/github/multiplechoice/spiders/requirements/?branch=master
-  :alt: Requirements Status
+.. |Updates| image:: https://pyup.io/repos/github/multiplechoice/spiders/shield.svg
+  :target: https://pyup.io/repos/github/multiplechoice/spiders/
+  :alt: Updates
