@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 
 import dateutil.parser
 import scrapy
@@ -18,7 +18,7 @@ class VisirSpider(scrapy.Spider):
             item = JobsItem()
             item['spider'] = self.name
             item['url'] = url = info.css('a::attr(href)').extract_first()
-            parsed_url = urlparse.urlparse(url)
+            parsed_url = urllib.parse.urlparse(url)
             if parsed_url.query:
                 # each search generates a new `searchId` value which messes up the storage layer
                 item['url'] = url = parsed_url._replace(query='').geturl()

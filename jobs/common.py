@@ -24,7 +24,7 @@ def decode_date_string(date_string=None):
     Handles parsing abbreviated localised date strings into an ISO8601 compatible timestamp.
 
     Args:
-        date_string (:obj: `unicode`, optional): unicode string with the extracted date
+        date_string (:obj: `string`, optional): unicode string with the extracted date
 
     Examples:
         >>> decode_date_string(None)
@@ -33,16 +33,11 @@ def decode_date_string(date_string=None):
         '2011-04-27'
     
         >>> decode_date_string(u'1. ma\u00ed.')
-        '2018-05-01'
+        '2019-05-01'
     
     """
     if date_string is None:
         # for when the input is None, re simply return
-        return
-
-    if not isinstance(date_string, unicode):
-        # only support unicode strings, the theory being that they will properly represent characters
-        # and thus match when the regex is used
         return
 
     regex = re.compile(r'(?P<date>\d+). (?P<month>\w+)([. ]+)?(?P<year>\d+)?', re.UNICODE)
@@ -72,7 +67,7 @@ def translate_month(month):
         >>> translate_month(u'jan')
         1
     """
-    for key, values in months.iteritems():
+    for key, values in months.items():
         if month in values:
             return key
 
