@@ -3,3 +3,4 @@
 .cache/
 venv/
 logs
+.vscode/
