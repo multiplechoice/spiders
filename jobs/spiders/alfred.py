@@ -1,5 +1,5 @@
 import json
-import urlparse
+import urllib.parse
 
 import dateutil.parser
 import scrapy
@@ -26,9 +26,9 @@ class AlfredSpider(scrapy.Spider):
             item = JobsItem()
             item['spider'] = self.name
             item['company'] = included_data[company_id]['attributes']['name']
-            item['url'] = urlparse.urljoin('https://alfred.is/starf/', job_id)
+            item['url'] = urllib.parse.urljoin('https://alfred.is/starf/', job_id)
 
-            api_url = urlparse.urljoin('https://api.alfred.is/api/v3/web/open/jobs/', job_id)
+            api_url = urllib.parse.urljoin('https://api.alfred.is/api/v3/web/open/jobs/', job_id)
             request = scrapy.Request(api_url, callback=self.parse_specific_job)
             request.meta['item'] = item
             yield request
