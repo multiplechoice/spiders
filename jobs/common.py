@@ -80,7 +80,7 @@ def clean_html(input_html):
     if isinstance(input_html, (list, tuple)):
         for line in input_html:
             cleaned_lines.append(cleaner.clean(line).strip())
-    elif isinstance(input_html, basestring):
+    elif isinstance(input_html, str):
         cleaned_lines.append(cleaner.clean(input_html).strip())
 
     return '<br>'.join(cleaned_lines)
