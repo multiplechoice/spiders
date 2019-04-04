@@ -7,7 +7,7 @@ Scrapy based spiders that crawl for job listings.
 
 Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__, `Vísir <https://job.visir.is/>`__ and `Alfreð <https://alfred.is/>`__ for job postings.
 
-This project relies upon the `multiplechoice/sqlalchemy-mappings` project to maintain the correct database structures.
+This project relies upon the ``multiplechoice/sqlalchemy-mappings`` project to maintain the correct database structures.
 
 Running
 -------
@@ -42,12 +42,12 @@ Tests are invoked with pytest:
 
 .. code-block:: bash
 
-    $ pytest --disable-pytest-warnings --doctest-modules --doctest-report ndiff jobs
+    $ pytest --disable-pytest-warnings --doctest-modules --doctest-report ndiff jobs tests
 
 Deploying
 ---------
 
-Deployments are handled using Serverless_ deployments. To install the `sls` tool you need to use `npm`:
+Deployments are handled using Serverless_ deployments. To install the ``sls`` tool you need to use ``npm``:
 
 .. code-block:: bash
 
@@ -62,7 +62,7 @@ Deployments are handled using Serverless_ deployments. To install the `sls` tool
     ...
 
 The above commands install the command line tool, creates a template, and installs the Python requirements extension.
-The AWS Lambdas are then deployed using the `sls` tool:
+The AWS Lambdas are then deployed using the ``sls`` tool:
 
 .. code-block:: bash
 
