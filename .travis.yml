@@ -8,6 +8,6 @@ install:
   - pip install -r test_requirements.txt
   - pip install coveralls pytest-cov
 script:
-  - pytest --disable-pytest-warnings --doctest-modules --doctest-report ndiff jobs
+  - pytest --disable-pytest-warnings --doctest-modules --doctest-report ndiff jobs tests
 after_success:
   - coveralls
