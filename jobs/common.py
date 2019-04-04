@@ -4,18 +4,18 @@ import bleach
 import re
 
 months = {
-    1: u'jan',
-    2: u'feb',
-    3: u'mars',
-    4: [u'apr\u00edl', u'apr'],
-    5: u'ma\u00ed',
-    6: u'j\u00fan\u00ed',
-    7: u'j\u00fal\u00ed',
-    8: u'\u00e1g\u00fast',
-    9: u'sept',
-    10: u'okt',
-    11: u'n\u00f3v',
-    12: u'des',
+    1: 'jan',
+    2: 'feb',
+    3: 'mars',
+    4: ['apr\u00edl', 'apr'],
+    5: 'ma\u00ed',
+    6: 'j\u00fan\u00ed',
+    7: 'j\u00fal\u00ed',
+    8: '\u00e1g\u00fast',
+    9: 'sept',
+    10: 'okt',
+    11: 'n\u00f3v',
+    12: 'des',
 }
 
 
@@ -29,10 +29,10 @@ def decode_date_string(date_string=None):
     Examples:
         >>> decode_date_string(None)
         
-        >>> decode_date_string(u'27. apr\u00edl 2011')
+        >>> decode_date_string('27. apr\u00edl 2011')
         '2011-04-27'
     
-        >>> decode_date_string(u'1. ma\u00ed.')
+        >>> decode_date_string('1. ma\u00ed.')
         '2019-05-01'
     
     """
@@ -64,7 +64,7 @@ def translate_month(month):
         int: month index starting from 1
     
     Examples:
-        >>> translate_month(u'jan')
+        >>> translate_month('jan')
         1
     """
     for key, values in months.items():
