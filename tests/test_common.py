@@ -1,4 +1,5 @@
 from jobs.common import decode_date_string, translate_month
+from freezegun import freeze_time
 
 
 def test_month_lookups():
@@ -30,11 +31,11 @@ def test_decoding_whole_string_from_tvinna():
     assert decode_date_string(u'29. feb. 2016') == '2016-02-29'
 
 
+@freeze_time('1st April, 2017')
 def test_decoding_whole_string_from_mbl():
-    # TODO: these tests will fail when we get into 2018; need to mock the date
-    assert decode_date_string(u'1. ma\u00ed.') == '2017-05-01'
-    assert decode_date_string(u'10. ma\u00ed.') == '2017-05-10'
-    assert decode_date_string(u'16. apr.') == '2017-04-16'
+    assert decode_date_string('1. ma\u00ed.') == '2017-05-01'
+    assert decode_date_string('10. ma\u00ed.') == '2017-05-10'
+    assert decode_date_string('16. apr.') == '2017-04-16'
 
 
 def test_nonetype():
