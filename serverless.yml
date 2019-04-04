@@ -1,0 +1,21 @@
+service: spiders # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.7
+  timeout: 30s
+
+functions:
+  tvinna:
+    handler: lambda.run
+    environment:
+      SCRAPY_SPIDER: tvinna
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    useDownloadCache: true
+    useStaticCache: true

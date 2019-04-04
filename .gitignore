@@ -4,3 +4,5 @@
 venv/
 logs
 .vscode/
+.scrapy/
+.serverless/
