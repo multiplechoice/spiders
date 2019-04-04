@@ -1,14 +1,21 @@
+import json
+import os
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-import os
 
 
 def run(event, context):
-    spider = event.get('spider', os.getenv('SCRAPY_SPIDER'))
     process = CrawlerProcess(get_project_settings())
+    process.settings.update({
+        'LOG_ENABLED': False
+    })
+
+    name = event.get('spider', os.getenv('SCRAPY_SPIDER'))
+    spider = process.create_crawler(name)
+
     process.crawl(spider)
     process.start()
-    return((event, context))
+    return json.dumps(spider.stats.get_stats(), default=str)
 
 
 if __name__ == '__main__':
