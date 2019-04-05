@@ -1,4 +1,23 @@
-service: spiders # NOTE: update this with your service name
+service: spiders
+
+package:
+  exclude:
+    - .cache/**
+    - .idea/**
+    - .pytest_cache/**
+    - .scrapy/**
+    - .vscode/**
+    - .coverage
+    - tests/**
+    - .pep8
+    - .python-version
+    - .pyup.yml
+    - .travis.yml
+    - LICENSE
+    - README.rst
+    - requirements.txt
+    - test_requirements.txt
+    - setup.cfg
 
 provider:
   name: aws
@@ -18,4 +37,4 @@ custom:
   pythonRequirements:
     dockerizePip: true
     useDownloadCache: true
-    useStaticCache: true
+    slim: true
