@@ -9,12 +9,9 @@ class MblSpider(scrapy.Spider):
     start_urls = ['http://www.mbl.is/atvinna/']
 
     def parse(self, response):
-        for job in response.css('.item-wrapper'):
+        for job in response.css('ul.list-group'):
             item = JobsItem()
             item['spider'] = self.name
-            item['title'] = job.css('.title::text').extract_first()
-            item['company'] = job.css('div.company-wrapper span.company::text').extract_first()
-            item['deadline'] = decode_date_string(job.css('span.date::text').extract_first())
 
             url = response.urljoin(job.css('a::attr(href)').extract_first())
             item['url'] = url
@@ -25,7 +22,11 @@ class MblSpider(scrapy.Spider):
 
     def parse_specific_job(self, response):
         item = response.meta['item']
+        item['company'] = response.css('.sub-title::text').get()
+        item['title'] = response.css('h1.title::text').get().strip()
+
         item['posted'] = decode_date_string(response.css('.ad_created::text').re(r'Sett inn: (.+)')[0])
+        item['deadline'] = decode_date_string(response.css('.group-wrapper.mt-15 span::text').get())
         item['description'] = clean_html(response.css('.maintext-wrapper').extract())
 
         # some mbl items are just a title and an image, so we need to save the image and upload it to s3
