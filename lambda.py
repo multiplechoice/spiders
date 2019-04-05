@@ -1,7 +1,20 @@
-import json
+from collections import OrderedDict
+import datetime
 import os
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
+
+
+def format_response(response):
+    # the stats object has datetime objects and they won't serialise properly
+    fixed = OrderedDict()
+    for key, value in sorted(response.items()):
+        if isinstance(value, datetime.datetime):
+            fixed[key] = str(value)
+        else:
+            fixed[key] = value
+
+    return fixed
 
 
 def run(event, context):
@@ -15,9 +28,9 @@ def run(event, context):
 
     process.crawl(spider)
     process.start()
-    return json.dumps(spider.stats.get_stats(), default=str)
+    return format_response(spider.stats.get_stats())
 
 
 if __name__ == '__main__':
     event = {'spider': os.getenv('SCRAPY_SPIDER', 'tvinna')}
-    run(event, '')
+    print(run(event, ''))
