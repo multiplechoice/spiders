@@ -9,6 +9,33 @@ Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/a
 
 This project relies upon the ``multiplechoice/sqlalchemy-mappings`` project to maintain the correct database structures.
 
+Developing
+----------
+
+Development is done in Python using the Scrapy_ library. Scrapy is used to download and then parse the target websites.
+We use the selectors within Scrapy to extract spcific XPath or CSS elements containing the relevant advertisement 
+information. Generally job adverts contain most of the following elements (internal variable names are in brackets):
+ * the company recruiting (*company*)
+ * the position being advertised (*title*)
+ * the date of posting (*posted*)
+ * the deadline for applications (*deadline*)
+ * a descriptive text (*description*)
+ * an image showing a formatted advert (*images* and *file_urls*)
+
+In addition we extract the URL to the specific advert. These may rot overtime but are useful to store.
+
+Extracting Images from Adverts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some advertisements include both a descriptive text and an image. The images are often the same as might be found in
+a print version of the advert in a newspaper or magazine. We can extract and save these images for display later.
+
+The images are extracted by setting the *file_urls* variable within the scraped job object (*items.JobsItem*). The object
+stores the parsed elements from the advertisement and is what is persisted to the database.
+
+By adding a URL to the *file_urls* attribute the *pipelines.ImageDownloader* class is invoked that will save the given 
+URLs to the specified backend.
+
 Running
 -------
 
@@ -60,7 +87,6 @@ Deployments are handled using Serverless_ deployments. To install the ``sls`` to
     ...
     $ npm install --save serverless-python-requirements
     ...
-
 The above commands install the command line tool, creates a template, and installs the Python requirements extension.
 The AWS Lambdas are then deployed using the ``sls`` tool:
 
@@ -77,3 +103,4 @@ The AWS Lambdas are then deployed using the ``sls`` tool:
   :target: https://pyup.io/repos/github/multiplechoice/spiders/
   :alt: Updates
 .. _Serverless: https://serverless.com/
+.. _Scrapy: https://scrapy.org/
