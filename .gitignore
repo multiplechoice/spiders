@@ -1,8 +1,8 @@
 *.pyc
 .coverage
 .cache/
-venv/
 logs
 .vscode/
 .scrapy/
 .serverless/
+.pytest_cache/
