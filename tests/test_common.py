@@ -41,3 +41,11 @@ def test_decoding_whole_string_from_mbl():
 def test_nonetype():
     # sometimes dates are expected but are empty, meaning we pass a None to the decode function
     assert decode_date_string(None) is None
+
+
+@freeze_time('1st April, 2017')
+def test_whitespace():
+    # need to ensure that the decoder can handle whitespace
+    assert decode_date_string('  15. apríl') == '2017-04-15'
+    assert decode_date_string('  15. apríl') == '2017-04-15'
+    assert decode_date_string('  15. apríl  ') == '2017-04-15'

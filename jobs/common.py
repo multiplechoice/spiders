@@ -37,8 +37,11 @@ def decode_date_string(date_string=None):
     
     """
     if date_string is None:
-        # for when the input is None, re simply return
+        # for when the input is None, we simply return
         return
+
+    # remove any extra spaces
+    date_string = date_string.strip(' ')
 
     regex = re.compile(r'(?P<date>\d+). (?P<month>\w+)([. ]+)?(?P<year>\d+)?', re.UNICODE)
     match = regex.match(date_string)
