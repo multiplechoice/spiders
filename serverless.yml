@@ -22,13 +22,21 @@ package:
 provider:
   name: aws
   runtime: python3.7
-  timeout: 30s
+  timeout: 30
 
 functions:
   tvinna:
     handler: lambda.run
     environment:
       SCRAPY_SPIDER: tvinna
+  mbl:
+    handler: lambda.run
+    environment:
+      SCRAPY_SPIDER: mbl
+  alfred:
+    handler: lambda.run
+    environment:
+      SCRAPY_SPIDER: alfred
 
 plugins:
   - serverless-python-requirements
