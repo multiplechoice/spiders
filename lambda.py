@@ -1,8 +1,16 @@
 from collections import OrderedDict
 import datetime
+import logging
 import os
 from scrapy.crawler import CrawlerProcess
+from scrapy.utils import display
 from scrapy.utils.project import get_project_settings
+
+
+# it's necessary to remove the lambda loggers first, otherwise the Scrapy log
+# settings aren't respected and we flood CloudWatch with logs anyway
+root = logging.getLogger()
+root.handlers = []
 
 
 def format_response(response):
@@ -18,14 +26,16 @@ def format_response(response):
 
 
 def run(event, context):
-    process = CrawlerProcess(get_project_settings())
-    process.settings.update({
-        'LOG_ENABLED': False
+    settings = get_project_settings()
+    settings.update({
+        'LOG_ENABLED': False,
+        'LOG_LEVEL': 'WARNING',
+        'TELNETCONSOLE_ENABLED': False
     })
 
+    process = CrawlerProcess(settings)
     name = event.get('spider', os.getenv('SCRAPY_SPIDER'))
     spider = process.create_crawler(name)
-
     process.crawl(spider)
     process.start()
     return format_response(spider.stats.get_stats())
@@ -33,4 +43,4 @@ def run(event, context):
 
 if __name__ == '__main__':
     event = {'spider': os.getenv('SCRAPY_SPIDER', 'tvinna')}
-    print(run(event, ''))
+    display.pprint(run(event, ''))
