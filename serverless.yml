@@ -24,22 +24,27 @@ provider:
   runtime: python3.7
   timeout: 30
   region: eu-central-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cloudwatch:PutMetricData
+      Resource: "*"
 
 functions:
   tvinna:
-    handler: lambda.run
+    handler: handler.run
     environment:
       SCRAPY_SPIDER: tvinna
     events:
       - schedule: rate(30 minutes)
   mbl:
-    handler: lambda.run
+    handler: handler.run
     environment:
       SCRAPY_SPIDER: mbl
     events:
       - schedule: rate(30 minutes)
   alfred:
-    handler: lambda.run
+    handler: handler.run
     environment:
       SCRAPY_SPIDER: alfred
     events:
