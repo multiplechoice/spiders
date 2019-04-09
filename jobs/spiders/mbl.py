@@ -4,6 +4,11 @@ from jobs.common import decode_date_string, clean_html
 from jobs.items import JobsItem
 
 
+def get_company_name(response):
+    # it's possible to give a link with the text, which changes the CSS classes
+    return response.css('.sub-title::text').get() or response.css('.company-link::text').get()
+
+
 class MblSpider(scrapy.Spider):
     name = "mbl"
     start_urls = ['http://www.mbl.is/atvinna/']
@@ -22,7 +27,7 @@ class MblSpider(scrapy.Spider):
 
     def parse_specific_job(self, response):
         item = response.meta['item']
-        item['company'] = response.css('.sub-title::text').get()
+        item['company'] = get_company_name(response)
         item['title'] = response.css('h1.title::text').get().strip()
 
         item['posted'] = decode_date_string(response.css('.ad_created::text').re(r'Sett inn: (.+)')[0])
