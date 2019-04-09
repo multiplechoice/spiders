@@ -29,6 +29,12 @@ provider:
       Action:
         - cloudwatch:PutMetricData
       Resource: "*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::${file(variables.json):S3_BUCKET}/*"
+  environment:
+    PG_CREDS: ${file(variables.json):PG_CREDS}
 
 functions:
   tvinna:
