@@ -4,7 +4,7 @@ cache: pip
 python:
   - '3.7'
 env:
-  - BOTO_CONFIG=/dev/null AWS_DEFAULT_REGION=eu-central-1
+  - BOTO_CONFIG=/dev/null AWS_DEFAULT_REGION=eu-central-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar
 install:
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
