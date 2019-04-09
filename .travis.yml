@@ -3,8 +3,9 @@ language: python
 cache: pip
 python:
   - '3.7'
-before_install:
-  - export BOTO_CONFIG=/dev/null
+env:
+  - BOTO_CONFIG=/dev/null
+  - AWS_DEFAULT_REGION=eu-central-1
 install:
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
