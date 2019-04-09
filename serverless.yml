@@ -32,6 +32,7 @@ provider:
     - Effect: Allow
       Action:
         - s3:PutObject
+        - s3:PutObjectAcl
       Resource: "arn:aws:s3:::${file(variables.json):S3_BUCKET}/*"
   environment:
     PG_CREDS: ${file(variables.json):PG_CREDS}
