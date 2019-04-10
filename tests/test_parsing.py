@@ -87,5 +87,50 @@ def test_mbl():
         specific_page.meta['item'] = job_listing.meta['item']
         # execute the callback with the specific page for the listing
         for item in job_listing.callback(specific_page):
-            # pprint.pprint(dict(item), width=115)
+            # ensure the items match
             assert item == expected_items[job_listing.url]
+
+
+def test_tvinna():
+    # create the spider
+    spider = tvinna.TvinnaSpider()
+    # load the data
+    feed = load_file('tests/data/tvinna/feed.xml')
+    # get the listings
+    for job_listing in spider.parse(feed):
+        # load the specific listing page content
+        specific_page = load_file('tests/data/tvinna/tvinna.html')
+        # bind the item that's already been parsed from the feed.xml
+        specific_page.meta['item'] = job_listing.meta['item']
+        # check that the data is as expected
+        for item in job_listing.callback(specific_page):
+            assert item == JobsItem(
+                company='TACTICA',
+                description='<p>Vegna aukinna verkefna leitum við nú að sérfræðingi í veflausnum og rekstri vefhýsinga'
+                    '.</p>\n\n<p>Helstu verkefni eru að þjónusta viðskiptavini og samstarfsaðila ásamt því að taka '
+                    'þátt í almennum rekstri hýsingarumhverfis TACTICA sem rekið er undir nafninu Hýsingar.is og er '
+                    'einn af stærri aðilum á hýsingarmarkaðnum í dag.</p>\n\n<p>TACTICA sinnir ekki vefsíðugerð en '
+                    'vinnur náið með vefstofum ýmist í þjónustu, ráðgjöf eða almennri aðstoð.</p>\n\n<p>Mikil áhersla '
+                    'er lögð á hæfni viðkomandi til þess að vinna með samstarfsaðilum og viðskiptavinum og tryggja að '
+                    'öllum verkefnum sé skilað á farsælan og faglegan hátt.</p>\n\n<p>Viðkomandi þarf að hafa góðan '
+                    'heildarskilning á þeim kerfum sem unnið er í og því nauðsynlegt að hafa bakgrunn í upplýsingatækni'
+                    ' og grunnskilning á vefforritun ásamt mjög góðum skilningi á WordPress.</p>\n\n<p>Framkoma og '
+                    'samskiptahæfni eru lykilatriði í þessu starfi.</p>\n\n<p><strong>Helstu verkefni og ábyrgð:'
+                    '</strong></p>\n\n<ul>\n<li>Samskipti og ráðgjöf við viðskiptavini og samstarfsaðila</li>\n<li>'
+                    'Greining vandamála sem geta komið upp á vefsvæðum notenda</li>\n<li>Aðstoð og vinna með '
+                    'samstarfsaðilum TACTICA</li>\n<li>Samskipti við þjónustuaðila og birgja</li>\n<li>Uppsetning og '
+                    'umsýsla á sýndarþjónum viðskiptavina</li>\n</ul>\n\n<p><strong>Menntunar- og hæfniskröfur</strong>'
+                    '</p>\n\n<ul>\n<li>Menntun eða reynsla sem nýtist starfi.</li>\n<li>Reynsla af hugbúnaðar / '
+                    'vefstörfum er mikill kostur.</li>\n<li>Mjög góð tölvukunnátta og skilningur á upplýsingatækni '
+                    'skilyrði</li>\n<li>Kerfi sem æskilegt er að viðkomandi hafi reynslu af: WHM/Cpanel, DNS, WordPress'
+                    ', Linux og Windows server</li>\n<li>Mjög gott vald á íslensku og ensku, færni til að tjá sig í '
+                    'ræðu og riti</li>\n<li>Góð skipulagshæfni, frumkvæði og sjálfstæði í vinnubrögðum er nauðsynleg'
+                    '</li>\n</ul>\n\n<p>TACTICA er vaxandi fyrirtæki sem var stofnað árið 2012 og sérhæfir sig í '
+                    'heildarlausnum upplýsingatæknimála fyrir minni og meðalstór fyrirtæki ásamt því að reka eitt '
+                    'stærsta hýsingarfyrirtæki landsins Hýsingar.is</p>\n\n<p>Einnig erum við leiðandi á sviði '
+                    'vöruumsýslu og samþættingarlausna.</p>',
+                posted='2019-04-09T19:07:52+00:00',
+                spider='tvinna',
+                title='Sérfræðingur í veflausnum',
+                url='https://www.tvinna.is/jobs/serfraedingur-i-veflausnum/'
+            )
