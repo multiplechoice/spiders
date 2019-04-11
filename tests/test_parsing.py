@@ -35,7 +35,7 @@ def test_mbl_parse():
 
 def test_mbl_parse_specific_job():
     spider = mbl.MblSpider()
-    assert list(spider.parse_specific_job(load_file('tests/data/mbl/mbl-contains-image.html'))) == [JobsItem(
+    assert list(spider.parse_specific_job(load_file('tests/data/mbl/job-contains-image.html'))) == [JobsItem(
         company='Reykjahlíðarskóli',
         deadline='2019-04-23',
         description='<p> </p><p><strong>Lausar eru til umsóknar kennarastöður\xa0við Reykjahlíðarskóla í '
@@ -47,7 +47,7 @@ def test_mbl_parse_specific_job():
         posted='2019-04-09',
         title='Grunnskólakennarar'
     )]
-    assert list(spider.parse_specific_job(load_file('tests/data/mbl/mbl-company-name-with-link.html'))) == [JobsItem(
+    assert list(spider.parse_specific_job(load_file('tests/data/mbl/job-company-name-with-link.html'))) == [JobsItem(
         company='Sagnheimar, byggðasafn',
         deadline='2019-04-10',
         description='<p> </p><p>Þekkingarsetur Vestmannaeyja- ÞSV leitar eftir öflugum og hugmyndaríkum '
@@ -62,7 +62,7 @@ def test_mbl_parse_specific_job():
         posted='2019-04-03',
         title='Safnstjóri'
     )]
-    assert list(spider.parse_specific_job(load_file('tests/data/mbl/mbl-company-name-plain.html'))) == [JobsItem(
+    assert list(spider.parse_specific_job(load_file('tests/data/mbl/job-company-name-plain.html'))) == [JobsItem(
         company='Hjúkrunarheimilið Hjallatún',
         deadline='2019-05-31',
         description='<p> </p><p></p>\n<p>\xa0</p>\n<p>\xa0</p>\n<p>Staða hjúkrunarfræðings</p>\n<p>'
@@ -120,6 +120,6 @@ def test_tvinna_parse_node():
 
 def test_tvinna_parse_specific_job():
     spider = tvinna.TvinnaSpider()
-    assert list(spider.parse_specific_job(load_file('tests/data/tvinna/tvinna.html'))) == [JobsItem(
+    assert list(spider.parse_specific_job(load_file('tests/data/tvinna/job.html'))) == [JobsItem(
         company='TACTICA'
     )]
