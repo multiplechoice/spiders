@@ -5,7 +5,7 @@ Spiders
 
 Scrapy based spiders that crawl for job listings.
 
-Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__, `Vísir <https://job.visir.is/>`__ and `Alfreð <https://alfred.is/>`__ for job postings.
+Scrapes `Tvinna <http://www.tvinna.is/>`__, `Morgunblaðið <http://www.mbl.is/atvinna/>`__, `Job.is <https://atvinna.frettabladid.is/>`__ and `Alfreð <https://alfred.is/>`__ for job postings.
 
 This project relies upon the ``multiplechoice/sqlalchemy-mappings`` project to maintain the correct database structures.
 
