@@ -13,7 +13,6 @@ class JobSpider(scrapy.spiders.XMLFeedSpider):
     namespaces = [('atom', 'http://www.w3.org/2005/Atom')]
 
     def parse_node(self, response, node):
-        print(type(response))
         item = JobsItem()
         item['spider'] = self.name
         item['url'] = url = node.xpath('guid/text()').extract_first()
@@ -25,7 +24,6 @@ class JobSpider(scrapy.spiders.XMLFeedSpider):
         yield request
 
     def parse_specific_job(self, response):
-        print(type(response))
         item = response.meta['item']
         item['title'] = clean_html(response.css('.details-header__title::text').get())
         item['company'] = clean_html(response.css('.listing-item__info--item-company::text').get())
