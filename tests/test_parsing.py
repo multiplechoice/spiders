@@ -123,3 +123,58 @@ def test_tvinna_parse_specific_job():
     assert list(spider.parse_specific_job(load_file('tests/data/tvinna/job.html'))) == [JobsItem(
         company='TACTICA'
     )]
+
+
+def test_alred_parse():
+    # load spider and API response
+    spider = alfred.AlfredSpider()
+    feed = load_file('tests/data/alfred/feed.json')
+    # ensure we got the expected number of job listings
+    assert len(list(spider.parse(feed))) == 1
+    for job in spider.parse(feed):
+        # check the parsed response
+        assert job.meta['item'] == JobsItem(
+            company='Landspítali',
+            spider='alfred',
+            url='https://alfred.is/starf/26565'
+        )
+
+
+def test_alfred_parse_specific_job():
+    # setup spider
+    spider = alfred.AlfredSpider()
+    assert list(spider.parse_specific_job(load_file('tests/data/alfred/job.json'))) == [JobsItem(
+        deadline='2019-04-29T00:00:00',
+        description='<p><strong>L&aelig;knaritari</strong></p>\n<p>Starf l&aelig;knaritara &aacute; Mi&eth;st&ouml;'
+            '&eth; um sj&uacute;kraskr&aacute;rritun er laust til ums&oacute;knar. Deildin er sta&eth;sett &iacute; '
+            'K&oacute;pavogi og fer &thorn;ar fram ritun sj&uacute;kraskr&aacute;r fyrir s&eacute;rgreinar &aacute; '
+            'Landsp&iacute;tala. &THORN;ar starfar fj&ouml;lmennur h&oacute;pur l&aelig;knaritara og skrifstofumanna '
+            'vi&eth; fj&ouml;lbreytt verkefni. Starfi&eth; er unni&eth; &iacute; vaktavinnu.<br> <br> &Aacute;hersla '
+            'er &aacute; teymisvinnu og g&oacute;&eth;a &thorn;j&oacute;nustu vi&eth; kl&iacute;n&iacute;ska '
+            'starfsmenn me&eth; g&aelig;&eth;i, &ouml;ryggi og stefnu LSH a&eth; lei&eth;arlj&oacute;si.</p>\n<p>'
+            '<strong>Helstu verkefni og &aacute;byrg&eth;</strong></p>\n<ul>\n<li>Ritun sj&uacute;kraskr&aacute;a '
+            'fyrir Landsp&iacute;tala</li>\n<li>Fagleg &aacute;byrg&eth; &aacute; skrifum og g&ouml;gnum sem fylgja '
+            'sj&uacute;krask&yacute;rslum</li>\n</ul>\n<p><strong>H&aelig;fnikr&ouml;fur</strong></p>\n<ul>\n<li>'
+            'Frumkv&aelig;&eth;i og metna&eth;ur &iacute; starfi</li>\n<li>&Ouml;gu&eth;, sj&aacute;lfst&aelig;&eth; '
+            'og skipul&ouml;g&eth; vinnubr&ouml;g&eth;</li>\n<li>J&aacute;kv&aelig;tt vi&eth;m&oacute;t</li>\n<li>Gott'
+            ' vald &aacute; &iacute;slensku og ensku</li>\n<li>L&ouml;ggilding &iacute; l&aelig;knaritun</li>\n</ul>\n'
+            '<p><strong>Frekari uppl&yacute;singar um starfi&eth;</strong></p>\n<p>Laun samkv&aelig;mt gildandi '
+            'kjarasamningi sem fj&aacute;rm&aacute;la- og efnahagsr&aacute;&eth;herra og SFR - st&eacute;ttarf&eacute;'
+            'lag &iacute; almanna&thorn;j&oacute;nustu hafa gert. Teki&eth; er mi&eth; af jafnr&eacute;ttisstefnu LSH '
+            'vi&eth; r&aacute;&eth;ningar &iacute; st&ouml;rf &aacute; Landsp&iacute;tala.</p>\n<p>Starfi&eth; er '
+            'laust n&uacute; &thorn;egar e&eth;a eftir samkomulagi. Ums&oacute;kn fylgi n&aacute;ms- og starfsferilskr'
+            '&aacute; &aacute;samt afriti af pr&oacute;fsk&iacute;rteinum og starfsleyfi. &Ouml;llum ums&oacute;knum '
+            'ver&eth;ur svara&eth;.<br> <br> Landsp&iacute;tali er lifandi og fj&ouml;lbreyttur vinnusta&eth;ur '
+            '&thorn;ar sem um 6000 manns starfa &iacute; &thorn;verfaglegum teymum og samstarfi &oacute;l&iacute;kra '
+            'fagst&eacute;tta. Framt&iacute;&eth;ars&yacute;n Landsp&iacute;tala er a&eth; vera h&aacute;sk&oacute;la'
+            'sj&uacute;krah&uacute;s &iacute; fremstu r&ouml;&eth; &thorn;ar sem sj&uacute;klingurinn er &aacute;vallt'
+            ' &iacute; &ouml;ndvegi. Lykil&aacute;herslur &iacute; stefnu sp&iacute;talans eru &ouml;ryggismenning, '
+            'skilvirk og v&ouml;ndu&eth; &thorn;j&oacute;nusta, uppbygging mannau&eth;s og st&ouml;&eth;ugar '
+            'umb&aelig;tur.</p>\n<p>Starfshlutfall er 50 - 100%<br> Ums&oacute;knarfrestur er til og me&eth; '
+            '29.04.2019</p>\n<p><strong>N&aacute;nari uppl&yacute;singar veitir</strong><br>Selma Gu&eth;nad&oacute;'
+            'ttir - selma@landspitali.is - 543 7260</p>\n<p><br> Landsp&iacute;tali<br> Mi&eth;st&ouml;&eth; um '
+            'sj&uacute;kraskr&aacute;rritun<br> K&oacute;pavogsger&eth;i 2<br> 200 K&oacute;pavogur</p>\n<p><br> '
+            '&nbsp;</p>',
+        posted='2019-04-11T10:47:00',
+        title='Læknaritari - Miðstöð sjúkraskrárritunar'
+    )]

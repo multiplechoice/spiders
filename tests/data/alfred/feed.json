@@ -1,0 +1,43 @@
+{
+    "data": [
+        {
+            "id": "26565",
+            "type": "job",
+            "attributes": {
+                "title": "Læknaritari - Miðstöð sjúkraskrárritunar",
+                "start": "2019-04-11 10:47",
+                "adtypeid": 1,
+                "adtype": "Í tölvupósti eða vefslóð",
+                "jobaddress": "Kópavogsgerði 2, 200 Kópavogur",
+                "slug": "landspitali-lknaritari---misto-sjukraskrarritunar",
+                "adstatus": "Active"
+            },
+            "relationships": {
+                "brand": {
+                    "data": {
+                        "id": "24",
+                        "type": "brand"
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "total_pages": 412,
+        "total_count": 412
+    },
+    "included": [
+        {
+            "id": "24",
+            "type": "brand",
+            "attributes": {
+                "name": "Landspítali",
+                "logo": "https://alfredprod.imgix.net/logo/cdc858ae-ca68-46ef-8c0d-8c8c1d343dc8.png",
+                "phone": "5431000",
+                "web": "http://www.landspitali.is",
+                "body": "Landspítali er aðalsjúkrahús landsins og háskólasjúkrahús. Hann veitir sérhæfða sjúkrahúsþjónustu, m.a. á göngu- og dagdeildum, fyrir alla landsmenn og almenna sjúkrahúsþjónustu fyrir íbúa heilbrigðisumdæmis höfuðborgarsvæðisins. ",
+                "facebook": "https://www.facebook.com/storfalandspitala/"
+            }
+        }
+    ]
+}

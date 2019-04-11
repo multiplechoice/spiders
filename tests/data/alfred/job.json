@@ -1,0 +1,140 @@
+{
+    "data": {
+        "id": "26565",
+        "type": "job",
+        "attributes": {
+            "title": "Læknaritari - Miðstöð sjúkraskrárritunar",
+            "start": "2019-04-11 10:47",
+            "deadline": "29.04.2019",
+            "created": "11.04.2019",
+            "body": "<p><strong>L&aelig;knaritari</strong></p>\n<p>Starf l&aelig;knaritara &aacute; Mi&eth;st&ouml;&eth; um sj&uacute;kraskr&aacute;rritun er laust til ums&oacute;knar. Deildin er sta&eth;sett &iacute; K&oacute;pavogi og fer &thorn;ar fram ritun sj&uacute;kraskr&aacute;r fyrir s&eacute;rgreinar &aacute; Landsp&iacute;tala. &THORN;ar starfar fj&ouml;lmennur h&oacute;pur l&aelig;knaritara og skrifstofumanna vi&eth; fj&ouml;lbreytt verkefni. Starfi&eth; er unni&eth; &iacute; vaktavinnu.<br /> <br /> &Aacute;hersla er &aacute; teymisvinnu og g&oacute;&eth;a &thorn;j&oacute;nustu vi&eth; kl&iacute;n&iacute;ska starfsmenn me&eth; g&aelig;&eth;i, &ouml;ryggi og stefnu LSH a&eth; lei&eth;arlj&oacute;si.</p>\n<p><strong>Helstu verkefni og &aacute;byrg&eth;</strong></p>\n<ul>\n<li>Ritun sj&uacute;kraskr&aacute;a fyrir Landsp&iacute;tala</li>\n<li>Fagleg &aacute;byrg&eth; &aacute; skrifum og g&ouml;gnum sem fylgja sj&uacute;krask&yacute;rslum</li>\n</ul>\n<p><strong>H&aelig;fnikr&ouml;fur</strong></p>\n<ul>\n<li>Frumkv&aelig;&eth;i og metna&eth;ur &iacute; starfi</li>\n<li>&Ouml;gu&eth;, sj&aacute;lfst&aelig;&eth; og skipul&ouml;g&eth; vinnubr&ouml;g&eth;</li>\n<li>J&aacute;kv&aelig;tt vi&eth;m&oacute;t</li>\n<li>Gott vald &aacute; &iacute;slensku og ensku</li>\n<li>L&ouml;ggilding &iacute; l&aelig;knaritun</li>\n</ul>\n<p><strong>Frekari uppl&yacute;singar um starfi&eth;</strong></p>\n<p>Laun samkv&aelig;mt gildandi kjarasamningi sem fj&aacute;rm&aacute;la- og efnahagsr&aacute;&eth;herra og SFR - st&eacute;ttarf&eacute;lag &iacute; almanna&thorn;j&oacute;nustu hafa gert. Teki&eth; er mi&eth; af jafnr&eacute;ttisstefnu LSH vi&eth; r&aacute;&eth;ningar &iacute; st&ouml;rf &aacute; Landsp&iacute;tala.</p>\n<p>Starfi&eth; er laust n&uacute; &thorn;egar e&eth;a eftir samkomulagi. Ums&oacute;kn fylgi n&aacute;ms- og starfsferilskr&aacute; &aacute;samt afriti af pr&oacute;fsk&iacute;rteinum og starfsleyfi. &Ouml;llum ums&oacute;knum ver&eth;ur svara&eth;.<br /> <br /> Landsp&iacute;tali er lifandi og fj&ouml;lbreyttur vinnusta&eth;ur &thorn;ar sem um 6000 manns starfa &iacute; &thorn;verfaglegum teymum og samstarfi &oacute;l&iacute;kra fagst&eacute;tta. Framt&iacute;&eth;ars&yacute;n Landsp&iacute;tala er a&eth; vera h&aacute;sk&oacute;lasj&uacute;krah&uacute;s &iacute; fremstu r&ouml;&eth; &thorn;ar sem sj&uacute;klingurinn er &aacute;vallt &iacute; &ouml;ndvegi. Lykil&aacute;herslur &iacute; stefnu sp&iacute;talans eru &ouml;ryggismenning, skilvirk og v&ouml;ndu&eth; &thorn;j&oacute;nusta, uppbygging mannau&eth;s og st&ouml;&eth;ugar umb&aelig;tur.</p>\n<p>Starfshlutfall er 50 - 100%<br /> Ums&oacute;knarfrestur er til og me&eth; 29.04.2019</p>\n<p><strong>N&aacute;nari uppl&yacute;singar veitir</strong><br />Selma Gu&eth;nad&oacute;ttir - selma@landspitali.is - 543 7260</p>\n<p><br /> Landsp&iacute;tali<br /> Mi&eth;st&ouml;&eth; um sj&uacute;kraskr&aacute;rritun<br /> K&oacute;pavogsger&eth;i 2<br /> 200 K&oacute;pavogur</p>\n<p><br /> &nbsp;</p>",
+            "applyweb": "https://www.landspitali.is/um-landspitala/mannaudur/laus-storf/starf/?id=19774",
+            "adtypeid": 1,
+            "adtype": "Í tölvupósti eða vefslóð",
+            "slug": "landspitali-lknaritari---misto-sjukraskrarritunar",
+            "adstatus": "Active"
+        },
+        "relationships": {
+            "brand": {
+                "data": {
+                    "id": "24",
+                    "type": "brand"
+                }
+            },
+            "jobstatus": {
+                "data": {
+                    "id": "2",
+                    "type": "jobstatus"
+                }
+            },
+            "adtype": {
+                "data": {
+                    "id": "1",
+                    "type": "adtype"
+                }
+            },
+            "jobtype": {
+                "data": {
+                    "id": "1",
+                    "type": "jobtype"
+                }
+            },
+            "jobtags": {
+                "data": [
+                    {
+                        "id": "316",
+                        "type": "jobtag"
+                    }
+                ]
+            },
+            "address": {
+                "data": {
+                    "id": "10092132",
+                    "type": "address"
+                }
+            }
+        }
+    },
+    "included": [
+        {
+            "id": "24",
+            "type": "brand",
+            "attributes": {
+                "name": "Landspítali",
+                "logo": "https://alfredprod.imgix.net/logo/cdc858ae-ca68-46ef-8c0d-8c8c1d343dc8.png",
+                "phone": "5431000",
+                "web": "http://www.landspitali.is",
+                "body": "Landspítali er aðalsjúkrahús landsins og háskólasjúkrahús. Hann veitir sérhæfða sjúkrahúsþjónustu, m.a. á göngu- og dagdeildum, fyrir alla landsmenn og almenna sjúkrahúsþjónustu fyrir íbúa heilbrigðisumdæmis höfuðborgarsvæðisins. ",
+                "facebook": "https://www.facebook.com/storfalandspitala/",
+                "image": "https://alfredprod.imgix.net/cover/2ae478a8-585d-4a30-ba96-84eb19be6628.jpeg"
+            }
+        },
+        {
+            "id": "2",
+            "type": "jobstatus",
+            "attributes": {
+                "name": "Active",
+                "active": true,
+                "description": "Virk"
+            }
+        },
+        {
+            "id": "1",
+            "type": "adtype",
+            "attributes": {
+                "name": "Í tölvupósti eða vefslóð",
+                "active": true,
+                "price": 0,
+                "maxinstances": 0,
+                "maxprice": 0
+            }
+        },
+        {
+            "id": "1",
+            "type": "jobtype",
+            "attributes": {
+                "id": null,
+                "name": "Fullt starf",
+                "adcount": null
+            }
+        },
+        {
+            "id": "316",
+            "type": "jobtag",
+            "attributes": {
+                "name": "Læknaritari",
+                "active": true,
+                "count": 0
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "id": "1",
+                        "type": "category"
+                    }
+                }
+            }
+        },
+        {
+            "id": "10092132",
+            "type": "address",
+            "attributes": {
+                "name": "Kópavogsgerði 2",
+                "number": 2,
+                "zip": "200 Kópavogur",
+                "zipnr": 200,
+                "zipname": "Kópavogur",
+                "lat": 64.1079396399081,
+                "lon": -21.9123308032795
+            }
+        },
+        {
+            "id": "1",
+            "type": "category",
+            "attributes": {
+                "name": "Heilbrigðisþjónusta",
+                "active": true
+            }
+        }
+    ]
+}
