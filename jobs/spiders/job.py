@@ -7,7 +7,7 @@ from jobs.items import JobsItem
 
 
 class JobSpider(scrapy.spiders.XMLFeedSpider):
-    name = 'job'
+    name = 'job.is'
     start_urls = ['https://atvinna.frettabladid.is/feeds/rss.xml']
     itertag = 'item'
     namespaces = [('atom', 'http://www.w3.org/2005/Atom')]

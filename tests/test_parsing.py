@@ -187,7 +187,7 @@ def test_job_parse():
     assert len(list(spider.parse(feed))) == 1
     for item in spider.parse(feed):
         assert item.meta['item'] == JobsItem(
-            spider='job',
+            spider='job.is',
             url='https://atvinna.frettabladid.is/job/17112/smiðir-flísarar-múrarar-málarar-og-píparar-óskast-sem-fyrst/',
             posted='2019-04-08T10:57:44+00:00'
         )

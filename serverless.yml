@@ -59,7 +59,7 @@ functions:
   job:
     handler: handler.run
     environment:
-      SCRAPY_SPIDER: job
+      SCRAPY_SPIDER: job.is
     # events:
     #   - schedule: rate(30 minutes)
 
