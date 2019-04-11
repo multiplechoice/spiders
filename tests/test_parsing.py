@@ -1,19 +1,20 @@
 from jobs.items import JobsItem
-from jobs.spiders import alfred, mbl, tvinna
+from jobs.spiders import alfred, job, mbl, tvinna
 
 from scrapy.http.request import Request
 from scrapy.http.response.html import HtmlResponse
+from scrapy.http.response.xml import XmlResponse
 
 
-def make_response(html):
-    response = HtmlResponse('http://fake', encoding='utf8', body=html, request=Request('http://fake'))
+def make_response(html, response_class=HtmlResponse):
+    response = response_class('http://fake', encoding='utf8', body=html, request=Request('http://fake'))
     response.meta['item'] = JobsItem()
     return response
 
 
-def load_file(path):
+def load_file(path, response_class=HtmlResponse):
     with open(path) as handle:
-        return make_response(handle.read())
+        return make_response(handle.read(), response_class=response_class)
 
 
 def test_mbl_parse():
@@ -28,9 +29,9 @@ def test_mbl_parse():
         JobsItem(spider='mbl', url='http://fake/mbl-company-name-plain.html')
     ]
     # the mbl.parse method only extracts certain elements, such as the spide name and parsed url
-    for job in spider.parse(root):
+    for item in spider.parse(root):
         # ensure that the parsed item is in the expected result set
-        assert job.meta['item'] in from_parse_method
+        assert item.meta['item'] in from_parse_method
 
 
 def test_mbl_parse_specific_job():
@@ -82,12 +83,12 @@ def test_mbl_parse_specific_job():
 def test_tvinna_parse_node():
     # setup spider and load feed
     spider = tvinna.TvinnaSpider()
-    root = load_file('tests/data/tvinna/feed.xml')
+    feed = load_file('tests/data/tvinna/feed.xml', response_class=XmlResponse)
     # make sure the length is correct
-    assert len(list(spider.parse(root))) == 1
+    assert len(list(spider.parse(feed))) == 1
     # check the parsed elements
-    for job in spider.parse(root):
-        assert job.meta['item'] == JobsItem(
+    for item in spider.parse(feed):
+        assert item.meta['item'] == JobsItem(
             description='<p>Vegna aukinna verkefna leitum við nú að sérfræðingi í veflausnum og rekstri vefhýsinga'
                 '.</p>\n\n<p>Helstu verkefni eru að þjónusta viðskiptavini og samstarfsaðila ásamt því að taka '
                 'þátt í almennum rekstri hýsingarumhverfis TACTICA sem rekið er undir nafninu Hýsingar.is og er '
@@ -125,15 +126,15 @@ def test_tvinna_parse_specific_job():
     )]
 
 
-def test_alred_parse():
+def test_alfred_parse():
     # load spider and API response
     spider = alfred.AlfredSpider()
     feed = load_file('tests/data/alfred/feed.json')
     # ensure we got the expected number of job listings
     assert len(list(spider.parse(feed))) == 1
-    for job in spider.parse(feed):
+    for item in spider.parse(feed):
         # check the parsed response
-        assert job.meta['item'] == JobsItem(
+        assert item.meta['item'] == JobsItem(
             company='Landspítali',
             spider='alfred',
             url='https://alfred.is/starf/26565'
@@ -177,4 +178,28 @@ def test_alfred_parse_specific_job():
             '&nbsp;</p>',
         posted='2019-04-11T10:47:00',
         title='Læknaritari - Miðstöð sjúkraskrárritunar'
+    )]
+
+
+def test_job_parse():
+    spider = job.JobSpider()
+    feed = load_file('tests/data/job/feed.xml', response_class=XmlResponse)
+    assert len(list(spider.parse(feed))) == 1
+    for item in spider.parse(feed):
+        assert item.meta['item'] == JobsItem(
+            spider='job',
+            url='https://atvinna.frettabladid.is/job/17112/smiðir-flísarar-múrarar-málarar-og-píparar-óskast-sem-fyrst/',
+            posted='2019-04-08T10:57:44+00:00'
+        )
+
+
+def test_job_parse_specific_job():
+    spider = job.JobSpider()
+    assert list(spider.parse_specific_job(load_file('tests/data/job/job.html'))) == [JobsItem(
+        title='Smiðir ,flísarar, múrarar, málarar og píparar óskast sem fyrst!',
+        company='Já Iðnaðarmenn',
+        description='<p>Óskum eftir iðnaðarmönnum til starfa sem fyrst og fyrir sumarið.</p>\n<ul><li>Aldurslágmark 25'
+            ' ára.</li>\n<li>Iðnmenntun nauðsynleg.</li>\n<li>Haldgóð reynsla\xa0æskileg.</li>\n</ul><p>\xa0Vinsamlega'
+            ' sendið umsóknir á <a href="mailto:johann@jaidnadarmenn.is">johann@jaidnadarmenn.is</a></p>\n<p>\xa0</p>'
+            '\n<p>\xa0</p>\n<p>\xa0</p><br>'
     )]

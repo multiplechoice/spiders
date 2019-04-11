@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>
+            <![CDATA[JOB.IS]]>
+        </title>
+        <link>
+            <![CDATA[https://atvinna.frettabladid.is]]>
+        </link>
+        <description>
+            <![CDATA[Jobs from JOB.IS]]>
+        </description>
+        <language>is</language>
+        <pubDate>Thu, 11 Apr 2019 12:25:31 GMT</pubDate>
+        <lastBuildDate>Thu, 11 Apr 2019 12:25:31 GMT</lastBuildDate>
+        <generator>Smart Job Board</generator>
+        <webMaster>noreply@job.is (JOB.IS)</webMaster>
+        <image>
+            <url>https://atvinna.frettabladid.is/templates/BootstrapDND/assets/images/job-logo.png</url>
+            <title>JOB.IS</title>
+            <link>https://atvinna.frettabladid.is</link>
+        </image>
+        <atom:link href="https://atvinna.frettabladid.is/feeds/rss.xml" rel="self" type="application/rss+xml" />
+        
+        					<item>
+				<title><![CDATA[Smiðir ,flísarar, múrarar, málarar og píparar óskast sem fyrst!]]></title>
+				<link><![CDATA[https://atvinna.frettabladid.is/job/17112/smiðir-flísarar-múrarar-málarar-og-píparar-óskast-sem-fyrst/]]></link>
+				<description>
+					<![CDATA[
+					Já Iðnaðarmenn<br/>
+					<p>Óskum eftir iðnaðarmönnum til starfa sem fyrst og fyrir sumarið.</p>
+<ul><li>Aldurslágmark 25 ára.</li>
+<li>Iðnmenntun nauðsynleg.</li>
+<li>Haldgóð reynsla æskileg.</li>
+</ul><p> Vinsamlega sendið umsóknir á <a href="mailto:johann@jaidnadarmenn.is">johann@jaidnadarmenn.is</a></p>
+<p> </p>
+<p> </p>
+<p> </p>]]>
+				</description>
+				<pubDate>Mon, 08 Apr 2019 10:57:44 GMT</pubDate>
+				<guid><![CDATA[https://atvinna.frettabladid.is/job/17112/smiðir-flísarar-múrarar-málarar-og-píparar-óskast-sem-fyrst/]]></guid>
+			</item>
+
+</channel>
+</rss>

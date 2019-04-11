@@ -42,20 +42,26 @@ functions:
     handler: handler.run
     environment:
       SCRAPY_SPIDER: tvinna
-    events:
-      - schedule: rate(30 minutes)
+    # events:
+    #   - schedule: rate(30 minutes)
   mbl:
     handler: handler.run
     environment:
       SCRAPY_SPIDER: mbl
-    events:
-      - schedule: rate(30 minutes)
+    # events:
+    #   - schedule: rate(30 minutes)
   alfred:
     handler: handler.run
     environment:
       SCRAPY_SPIDER: alfred
-    events:
-      - schedule: rate(30 minutes)
+    # events:
+    #   - schedule: rate(30 minutes)
+  job:
+    handler: handler.run
+    environment:
+      SCRAPY_SPIDER: job
+    # events:
+    #   - schedule: rate(30 minutes)
 
 plugins:
   - serverless-python-requirements
