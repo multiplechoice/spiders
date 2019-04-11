@@ -203,3 +203,25 @@ def test_job_parse_specific_job():
             ' sendið umsóknir á <a href="mailto:johann@jaidnadarmenn.is">johann@jaidnadarmenn.is</a></p>\n<p>\xa0</p>'
             '\n<p>\xa0</p>\n<p>\xa0</p><br>'
     )]
+
+    assert list(spider.parse_specific_job(load_file('tests/data/job/job-with-image.html'))) == [JobsItem(
+        title='Launafulltrúi 50% starf',
+        company='Klettabær ehf.',
+        description='<p><strong>Klettabær leitar eftir öflugum launafulltrúa til starfa. </strong></p>\n<p>Klettabær '
+            'ehf. starfrækir sértæk búsetuúrræði til langs- og skamms tíma. Klettabær bíður upp á hvíldardvalir auk '
+            'fjölbreyttrar og einstaklingsmiðaðrar þjónustu í Þjónustumiðstöð Klettabæjar. Megin markhópur Klettabæjar'
+            ' eru börn og ungmenni með margþættan vanda sem þurfa sértæk úrræði og /eða einstaklingsmiðaða nálgun og '
+            'þjónustu.</p>\n<p><br><strong>Starfssvið: </strong></p>\n<ul><li>Unnið er með launakerfi DK og '
+            'tímaskráningarkerfið MTP.</li>\n<li>Vinnsla launabókhalds, þar með talið útreikningur, samantekt '
+            'yfirvinnu, greiðsla launa og skil launatengdra gjalda</li>\n<li>Afstemmingar og bókun á launalyklum</li>'
+            '\n<li>Upplýsingagjöf til stjórnenda og starfsmanna</li>\n<li>Samskipti við starfsmenn, lífeyrissjóði, '
+            'stéttarfélög og opinbera aðila</li>\n<li>Eftirlit með tímaskráningu starfsmanna</li>\n<li>Halda utan um '
+            'frídaga, veikindaleyfi og fæðingarorlofsdaga</li>\n<li>Ýmis önnur störf í tengslum við kjaramál '
+            'starfsmanna</li>\n</ul><p><br><strong>Hæfniskröfur: </strong></p>\n<ul><li>Góð reynsla af launabókhaldi '
+            'er nauðsynleg</li>\n<li>Góð þekking á DK launakerfinu og MTP er kostur</li>\n<li>Þekking á kjarasamningum'
+            ' sem og lögum um réttindi og skyldur starfsmanna</li>\n<li>Góð skipulagshæfni ,nákvæmni og sjálfstæð '
+            'vinnubrögð</li>\n<li>Þjónustulyndi, jákvæðni og lipurð í mannlegum samskiptum</li>\n</ul><p>'
+            'Umsóknarfrestur er til 10. apríl n.k. Umsókn ásamt ferilskrá skal senda á umsokn@ klettabaer.is merkt: '
+            'Launafulltrúi</p><br>',
+        file_urls=['https://atvinna.frettabladid.is/files/pictures/3x200launafulltrui.png']
+    )]

@@ -28,5 +28,10 @@ class JobSpider(scrapy.spiders.XMLFeedSpider):
         item['title'] = clean_html(response.css('.details-header__title::text').get())
         item['company'] = clean_html(response.css('.listing-item__info--item-company::text').get())
         item['description'] = clean_html(response.css('.details-body__content').get())
+        # some listings contain images
+        image_src = response.css('.jobmynd img::attr(src)').extract_first()
+        if image_src is not None:
+            item['file_urls'] = [image_src]
+
         yield item
 
