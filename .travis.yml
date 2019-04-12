@@ -1,4 +1,8 @@
 dist: xenial
+services:
+  - postgresql
+addons:
+  postgresql: "11.0"
 language: python
 cache: pip
 python:
@@ -9,6 +13,8 @@ install:
   - pip install -r requirements.txt
   - pip install -r test_requirements.txt
   - pip install coveralls pytest-cov
+before_script:
+  - psql -c 'CREATE DATABASE jobdb;' -U postgres
 script:
   - pytest --disable-pytest-warnings --doctest-modules --doctest-report ndiff jobs tests
 after_success:
