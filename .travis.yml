@@ -2,7 +2,7 @@ dist: xenial
 services:
   - postgresql
 addons:
-  postgresql: "11"
+  postgresql: "9.6"
 language: python
 cache: pip
 python:
