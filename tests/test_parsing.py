@@ -42,7 +42,7 @@ def test_mbl_parse_specific_job():
         description='<p> </p><p><strong>Lausar eru til umsóknar kennarastöður\xa0við Reykjahlíðarskóla í '
             'Mývatnssveit\xa0frá 1. ágúst 2019.</strong></p>\n<p>Um er að ræða umsjónarkennslu á unglingastigi,'
             ' stærðfræði, náttúrufræði, íþróttir, textílmennt og heimilisfræði.</p>',
-        file_urls=[
+        image_urls=[
             'http://fake/f7a81019-b164-4360-a8e3-7b87f42dcbb0.jpg'
         ],
         posted='2019-04-09',
@@ -223,5 +223,5 @@ def test_job_parse_specific_job():
             'vinnubrögð</li>\n<li>Þjónustulyndi, jákvæðni og lipurð í mannlegum samskiptum</li>\n</ul><p>'
             'Umsóknarfrestur er til 10. apríl n.k. Umsókn ásamt ferilskrá skal senda á umsokn@ klettabaer.is merkt: '
             'Launafulltrúi</p><br>',
-        file_urls=['https://atvinna.frettabladid.is/files/pictures/3x200launafulltrui.png']
+        image_urls=['https://atvinna.frettabladid.is/files/pictures/3x200launafulltrui.png']
     )]

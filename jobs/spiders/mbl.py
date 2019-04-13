@@ -38,7 +38,7 @@ class MblSpider(scrapy.Spider):
         # so that we can show it later without hot-linking issues
         image_src = response.css('.img-responsive::attr(src)').extract_first()
         if image_src is not None:
-            # adding to the `file_urls` causes this to be picked up by the FilesPipeline plugin
-            item['file_urls'] = [response.urljoin(image_src)]
+            # adding to the `image_urls` causes this to be picked up by the ImageDownloader plugin
+            item['image_urls'] = [response.urljoin(image_src)]
 
         yield item

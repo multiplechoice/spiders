@@ -4,7 +4,7 @@ import logging
 from mappings import ScrapedJob
 from mappings.utils import session_scope
 from scrapy.exceptions import NotConfigured
-from scrapy.pipelines.files import FilesPipeline, S3FilesStore, FSFilesStore
+from scrapy.pipelines.images import ImagesPipeline
 
 
 class PostgresPipeline(object):
@@ -52,50 +52,13 @@ class PostgresPipeline(object):
         return item
 
 
-class S3FilesStore_V4(S3FilesStore):
-    AWS_ACCESS_KEY_ID = None
-    AWS_SECRET_ACCESS_KEY = None
-    AWS_DEFAULT_REGION = None
-
-    def __init__(self, uri):
-        super(S3FilesStore_V4, self).__init__(uri)
-        import botocore.session
-        from botocore.config import Config
-        config = Config(signature_version='s3v4', s3={'payload_signing_enabled': True})
-        session = botocore.session.get_session()
-        self.s3_client = session.create_client(
-            's3',
-            config=config,
-            aws_access_key_id=self.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=self.AWS_SECRET_ACCESS_KEY,
-            region_name=self.AWS_DEFAULT_REGION
-        )
-
-
-class ImageDownloader(FilesPipeline):
-    STORE_SCHEMES = {
-        '': FSFilesStore,
-        'file': FSFilesStore,
-        's3': S3FilesStore_V4,
-    }
-
-    @classmethod
-    def from_settings(cls, settings):
-        s3store = cls.STORE_SCHEMES['s3']
-        s3store.AWS_ACCESS_KEY_ID = settings['AWS_ACCESS_KEY_ID']
-        s3store.AWS_SECRET_ACCESS_KEY = settings['AWS_SECRET_ACCESS_KEY']
-        s3store.AWS_DEFAULT_REGION = settings['AWS_DEFAULT_REGION']
-        s3store.POLICY = settings['FILES_STORE_S3_ACL']
-
-        store_uri = settings['FILES_STORE']
-        return cls(store_uri, settings=settings)
-
+class ImageDownloader(ImagesPipeline):
     def item_completed(self, results, item, info):
         completed_item = super(ImageDownloader, self).item_completed(results, item, info)
         images = []
-        for image_details in completed_item[self.files_result_field]:
+        for image_details in completed_item[self.images_result_field]:
             image_details['s3_path'] = \
                 'https://s3.eu-central-1.amazonaws.com/multiplechoice/images/' + image_details['path']
             images.append(image_details)
-        completed_item[self.files_result_field] = images
+        completed_item[self.images_result_field] = images
         return completed_item

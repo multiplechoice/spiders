@@ -31,7 +31,7 @@ class JobSpider(scrapy.spiders.XMLFeedSpider):
         # some listings contain images
         image_src = response.css('.jobmynd img::attr(src)').extract_first()
         if image_src is not None:
-            item['file_urls'] = [image_src]
+            item['image_urls'] = [image_src]
 
         yield item
 

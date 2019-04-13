@@ -69,9 +69,10 @@ ITEM_PIPELINES = {
     'jobs.pipelines.PostgresPipeline': 300,
 }
 
-FILES_STORE = 's3://multiplechoice/images/'
-FILES_RESULT_FIELD = 'images'
-FILES_STORE_S3_ACL = 'public-read'
+IMAGES_STORE = 's3://multiplechoice/images'
+IMAGES_STORE_S3_ACL = 'public-read'
+IMAGES_URLS_FIELD = 'image_urls'
+IMAGES_RESULT_FIELD = 'images'
 
 
 # Enable and configure the AutoThrottle extension (disabled by default)
