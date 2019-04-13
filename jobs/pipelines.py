@@ -22,6 +22,9 @@ class PostgresPipeline(object):
     def from_crawler(cls, crawler):
         if 'PG_CREDS' not in crawler.settings:
             raise NotConfigured
+        
+        if crawler.settings['PG_CREDS'] in ('', None):
+            raise NotConfigured
 
         return cls(settings=crawler.settings, stats=crawler.stats)
 

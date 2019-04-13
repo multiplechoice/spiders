@@ -44,6 +44,16 @@ def test_postgres_environment_variable():
     with pytest.raises(NotConfigured):
         PostgresPipeline.from_crawler(get_crawler())
 
+    # empty strings should raise NotConfigured
+    with pytest.raises(NotConfigured):
+        crawler = get_crawler(settings_dict={'PG_CREDS': ''})
+        PostgresPipeline.from_crawler(crawler)
+
+    # as do NoneTypes
+    with pytest.raises(NotConfigured):
+        crawler = get_crawler(settings_dict={'PG_CREDS': None})
+        PostgresPipeline.from_crawler(crawler)
+
     # and that it works when we do
     crawler = get_crawler(settings_dict={'PG_CREDS': 'frrrrp'})
     assert isinstance(PostgresPipeline.from_crawler(crawler), PostgresPipeline)
