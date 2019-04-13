@@ -1,10 +1,13 @@
 from mappings import Base, ScrapedJob
 from mappings.utils import create_engine, install_pgcrypto, create_table, create_user, alter_table_owner, session_scope
-from jobs.pipelines import PostgresPipeline
+from jobs.pipelines import PostgresPipeline, ImageDownloader
 from jobs.items import JobsItem
 
 from scrapy.exceptions import NotConfigured
 from scrapy.utils.test import get_crawler
+from scrapy.spiders import Spider
+from scrapy.settings import Settings
+
 import pytest
 import sqlalchemy  # comes from the sqlalchemy-mappings dependencies
 import mock
@@ -58,12 +61,13 @@ def test_postgres_statistics():
     crawler = get_crawler(settings_dict={'PG_CREDS': DIRK})
     pipeline = PostgresPipeline.from_crawler(crawler)
     job = JobsItem(spider='test', url='http://fake/job/advert.html', company='Project Blackwing')
+    spider = Spider('fake.com')
 
     # create a mock for the db session so we can control the response
     pipeline.session = mock.MagicMock()
     pipeline.session.query.return_value.filter.return_value.one_or_none.return_value = None
     # if the lookup returns nothing, then the new job is added to the db
-    pipeline.process_item(job, None)
+    pipeline.process_item(job, spider)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') is None
@@ -73,7 +77,7 @@ def test_postgres_statistics():
     # note that the internal response is the DB representation of the job
     ScrapedJob.from_dict(dict(job))
     pipeline.session.query.return_value.filter.return_value.one_or_none.return_value = ScrapedJob.from_dict(dict(job))
-    pipeline.process_item(job, None)
+    pipeline.process_item(job, spider)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') is None
@@ -81,7 +85,7 @@ def test_postgres_statistics():
 
     # now if we modify the job, and readd it we should trigger a 'modify'
     job['title'] = 'Test Subject'
-    pipeline.process_item(job, None)
+    pipeline.process_item(job, spider)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') == 1
@@ -94,9 +98,9 @@ def test_postgres_insert(db):
     test_subject = JobsItem(spider='a', url='http://subject.html', company='Project Blackwing', title='Test Subject')
     director = JobsItem(spider='a', url='http://director.html', company='Project Blackwing', title='Director')
 
-    # we don't need to provide the `spider` since it's not used, but is required for the inherited
+    # we don't _need_ to provide the `spider` since it's not used, but is required for the inherited
     # function signature
-    spider = None
+    spider = Spider('fake.com')
     pipeline.open_spider(spider)
     # as above, the `spider` argument isn't used, but required for the inherited signature
     pipeline.process_item(test_subject, spider)
@@ -115,3 +119,44 @@ def test_postgres_insert(db):
         assert result.url == director['url']
         assert result.spider == director['spider']
         assert result.data == dict(director)
+
+
+# https://github.com/scrapy/scrapy/blob/1fd1702a11a56ecbe9851ba4f9d3c10797e262dd/tests/test_pipeline_media.py#L18
+def _mocked_download_func(request, info):
+    response = request.meta.get('response')
+    return response() if callable(response) else response
+
+
+def test_image_downloader_elements():
+    # boilerplate taken from  Scrapy code base
+    # https://github.com/scrapy/scrapy/blob/1fd1702a11a56ecbe9851ba4f9d3c10797e262dd/tests/test_pipeline_media.py#L28
+    spider = Spider('fake.com')
+    pipeline = ImageDownloader('s3://frrp/', download_func=_mocked_download_func, settings=Settings(None))
+    pipeline.open_spider(spider)
+
+    # we need fake results to allow subsequent parsing of the item; we're not really fussed about this
+    # so it's a ittle over-engineered, since we just want to make sure that if a valid item, with downloaded
+    # image(s) then we just append the s3 path to the dict
+    results = [(True, {
+        'checksum': '22f7de7bfadfc4d1b35b2c3346e852e0',
+        'path': 'full/1df880943176207c4fb32ad59e0ce68c50285e8a.jpg',
+        'url': 'https://www.mbl.is/static/generic/2019/04/11/b4389bbc-0eca-4354-842b-80b2a05be489.jpg'
+    })]
+    item = {'company': 'Hljómahöll',
+            'deadline': '2019-04-28',
+            'description': '<p> </p>',
+            'image_urls': ['https://www.mbl.is/static/generic/2019/04/11/b4389bbc-0eca-4354-842b-80b2a05be489.jpg'],
+            'posted': '2019-04-11',
+            'spider': 'mbl',
+            'title': 'Tæknistjóri Hljómahallar',
+            'url': 'https://www.mbl.is/atvinna/5307/'}
+    output = pipeline.item_completed(results, item, pipeline.spiderinfo)
+    # the pipeline(s) should have added an 'images' element of uploaded images
+    assert 'images' in output
+    # we've provided only 1 entry in 'image_urls' so expect only 1 output
+    assert len(output['images']) == 1
+    # the resulting data should contain the 's3_path' key
+    data = output['images'][0]
+    assert 's3_path' in data
+    # the 's3_path' should end with the path, of the file that's been uploaded
+    assert data['s3_path'].endswith(data['path'])
