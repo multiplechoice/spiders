@@ -1,4 +1,4 @@
-from mappings import Base
+from mappings import Base, ScrapedJob
 from mappings.utils import create_engine, install_pgcrypto, create_table, create_user, alter_table_owner
 from jobs.pipelines import PostgresPipeline
 from jobs.items import JobsItem
@@ -7,6 +7,7 @@ from scrapy.exceptions import NotConfigured
 from scrapy.utils.test import get_crawler
 import pytest
 import sqlalchemy  # comes from the sqlalchemy-mappings dependencies
+import mock
 
 
 # use the setup/teardown logic from mappings/test_sessions.py
@@ -45,7 +46,7 @@ def test_environment_variable():
     assert isinstance(PostgresPipeline.from_crawler(crawler), PostgresPipeline)
 
 
-def test_initialisation(db):
+def test_initialisation():
     crawler = get_crawler(settings_dict={'PG_CREDS': DIRK})
     pipeline = PostgresPipeline.from_crawler(crawler)
     assert pipeline.stats.get_value('postgresql/add') is None
@@ -53,23 +54,26 @@ def test_initialisation(db):
     assert pipeline.stats.get_value('postgresql/ignore') is None
 
 
-def test_adding_items(db):
+def test_statistics():
     crawler = get_crawler(settings_dict={'PG_CREDS': DIRK})
     pipeline = PostgresPipeline.from_crawler(crawler)
     job = JobsItem(spider='test', url='http://fake/job/advert.html', company='Project Blackwing')
-    # we don't need to provide the `spider` since it's not used, but is required for the inherited
-    # function signature
-    spider = None
-    pipeline.open_spider(spider)
-    # as above, the `spider` argument isn't used, but required for the inherited signature
-    pipeline.process_item(job, spider)
+
+    # create a mock for the db session so we can control the response
+    pipeline.session = mock.MagicMock()
+    pipeline.session.query.return_value.filter.return_value.one_or_none.return_value = None
+    # if the lookup returns nothing, then the new job is added to the db
+    pipeline.process_item(job, None)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') is None
     assert pipeline.stats.get_value('postgresql/ignore') is None
 
     # if we try and add the same job again we should get an 'ignore'
-    pipeline.process_item(job, spider)
+    # note that the internal response is the DB representation of the job
+    ScrapedJob.from_dict(dict(job))
+    pipeline.session.query.return_value.filter.return_value.one_or_none.return_value = ScrapedJob.from_dict(dict(job))
+    pipeline.process_item(job, None)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') is None
@@ -77,10 +81,8 @@ def test_adding_items(db):
 
     # now if we modify the job, and readd it we should trigger a 'modify'
     job['title'] = 'Test Subject'
-    pipeline.process_item(job, spider)
+    pipeline.process_item(job, None)
 
     assert pipeline.stats.get_value('postgresql/add') == 1
     assert pipeline.stats.get_value('postgresql/modify') == 1
     assert pipeline.stats.get_value('postgresql/ignore') == 1
-
-    pipeline.close_spider(spider)
