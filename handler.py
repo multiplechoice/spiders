@@ -30,6 +30,7 @@ def put_metrics(stats, function_name):
     cloudwatch = boto3.client('cloudwatch')
     for key, name, value in (
         ('item_scraped_count', 'scraped',  'items'),
+        ('file_count',         'saved',    'images'),
         ('postgresql/add',     'added',    'items'),
         ('postgresql/modify',  'modified', 'items'),
         ('postgresql/ignore',  'ignored',  'items')
