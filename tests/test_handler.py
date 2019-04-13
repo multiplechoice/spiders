@@ -50,6 +50,11 @@ def test_metrics():
             'Namespace': 'spiders'
         },
         {
+            'Dimensions': [{'Name': 'saved', 'Value': 'images'}],
+            'MetricName': 'mocked-spider/file_count',
+            'Namespace': 'spiders'
+        },
+        {
             'Dimensions': [{'Name': 'added', 'Value': 'items'}],
             'MetricName': 'mocked-spider/postgresql/add',
             'Namespace': 'spiders'
