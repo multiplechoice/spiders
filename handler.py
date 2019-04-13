@@ -64,7 +64,9 @@ def run(event, context):
     process.start()
 
     stats = spider.stats.get_stats()
-    put_metrics(stats, function_name=context.function_name)
+    if hasattr(context, 'function_name'):
+        put_metrics(stats, function_name=context.function_name)
+
     return format_response(stats)
 
 
