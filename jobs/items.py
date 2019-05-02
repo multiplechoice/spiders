@@ -10,6 +10,7 @@ class JobsItem(scrapy.Item):
     posted = scrapy.Field()
     deadline = scrapy.Field()
     description = scrapy.Field()
-    file_urls = scrapy.Field() # left for legacy
+    file_urls = scrapy.Field()  # left for legacy
     image_urls = scrapy.Field()
     images = scrapy.Field()
+    tags = scrapy.Field()

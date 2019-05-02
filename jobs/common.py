@@ -4,18 +4,18 @@ import bleach
 import re
 
 months = {
-    1: 'jan',
-    2: 'feb',
-    3: 'mars',
-    4: ['apr\u00edl', 'apr'],
-    5: 'ma\u00ed',
-    6: 'j\u00fan\u00ed',
-    7: 'j\u00fal\u00ed',
-    8: '\u00e1g\u00fast',
-    9: 'sept',
-    10: 'okt',
-    11: 'n\u00f3v',
-    12: 'des',
+    1: "jan",
+    2: "feb",
+    3: "mars",
+    4: ["apr\u00edl", "apr"],
+    5: "ma\u00ed",
+    6: "j\u00fan\u00ed",
+    7: "j\u00fal\u00ed",
+    8: "\u00e1g\u00fast",
+    9: "sept",
+    10: "okt",
+    11: "n\u00f3v",
+    12: "des",
 }
 
 
@@ -41,20 +41,22 @@ def decode_date_string(date_string=None):
         return
 
     # remove any extra spaces
-    date_string = date_string.strip(' ')
+    date_string = date_string.strip(" ")
 
-    regex = re.compile(r'(?P<date>\d+). (?P<month>\w+)([. ]+)?(?P<year>\d+)?', re.UNICODE)
+    regex = re.compile(
+        r"(?P<date>\d+). (?P<month>\w+)([. ]+)?(?P<year>\d+)?", re.UNICODE
+    )
     match = regex.match(date_string)
-    date = int(match.group('date'))
-    month = translate_month(match.group('month'))
-    year = match.group('year')
+    date = int(match.group("date"))
+    month = translate_month(match.group("month"))
+    year = match.group("year")
     # in some instances we don't have a specified year, it's assumed to be obvious in the context of the listing
     # just use the current year as a shortcut for now
     # TODO: make this work for dates that wrap over a year boundary
     if year is None:
         year = datetime.datetime.utcnow().year
 
-    return '{}-{:02}-{:02}'.format(year, month, date)
+    return "{}-{:02}-{:02}".format(year, month, date)
 
 
 def translate_month(month):
@@ -76,8 +78,10 @@ def translate_month(month):
 
 
 def clean_html(input_html):
-    allowed_tags = bleach.sanitizer.ALLOWED_TAGS + ['br', 'p']
-    cleaner = bleach.sanitizer.Cleaner(tags=allowed_tags, strip=True, strip_comments=True)
+    allowed_tags = bleach.sanitizer.ALLOWED_TAGS + ["br", "p"]
+    cleaner = bleach.sanitizer.Cleaner(
+        tags=allowed_tags, strip=True, strip_comments=True
+    )
     cleaned_lines = []
 
     if isinstance(input_html, (list, tuple)):
@@ -86,4 +90,4 @@ def clean_html(input_html):
     elif isinstance(input_html, str):
         cleaned_lines.append(cleaner.clean(input_html).strip())
 
-    return '<br>'.join(cleaned_lines)
+    return "<br>".join(cleaned_lines)
