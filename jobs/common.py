@@ -33,7 +33,7 @@ def decode_date_string(date_string=None):
         '2011-04-27'
     
         >>> decode_date_string('1. ma\u00ed.')
-        '2019-05-01'
+        '2020-05-01'
     
     """
     if date_string is None:

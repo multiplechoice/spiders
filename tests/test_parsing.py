@@ -43,12 +43,12 @@ def test_mbl_parse_specific_job():
     ) == [
         JobsItem(
             company="Reykjahlíðarskóli",
-            deadline="2019-04-23",
+            deadline="2020-04-23",
             description="<p> </p><p><strong>Lausar eru til umsóknar kennarastöður\xa0við Reykjahlíðarskóla í "
             "Mývatnssveit\xa0frá 1. ágúst 2019.</strong></p>\n<p>Um er að ræða umsjónarkennslu á unglingastigi,"
             " stærðfræði, náttúrufræði, íþróttir, textílmennt og heimilisfræði.</p>",
             image_urls=["http://fake/f7a81019-b164-4360-a8e3-7b87f42dcbb0.jpg"],
-            posted="2019-04-09",
+            posted="2020-04-09",
             title="Grunnskólakennarar",
         )
     ]
@@ -59,7 +59,7 @@ def test_mbl_parse_specific_job():
     ) == [
         JobsItem(
             company="Sagnheimar, byggðasafn",
-            deadline="2019-04-10",
+            deadline="2020-04-10",
             description="<p> </p><p>Þekkingarsetur Vestmannaeyja- ÞSV leitar eftir öflugum og hugmyndaríkum "
             "starfmanni í stöðu safnstjóra Sagnheima, byggðarsafns. Umsækjendur skulu hafa lokið háskólaprófi "
             "sem nýtist í starfi og búa yfir góðri tölvu- og tungumálakunnáttu. Helstu verkefni safnstjóra eru "
@@ -69,7 +69,7 @@ def test_mbl_parse_specific_job():
             "Nánari upplýsingar um starfið veitir Páll Marvin Jónsson, framkvæmdastjóri í síma 694-1006. "
             "Umsóknum ásamt menntunar- og starfsferilskrá skal skila á tölvutæku formi á netfangið pmj@setur.is"
             ", merkt: Starf safnstjóra.</p>",
-            posted="2019-04-03",
+            posted="2020-04-03",
             title="Safnstjóri",
         )
     ]
@@ -80,7 +80,7 @@ def test_mbl_parse_specific_job():
     ) == [
         JobsItem(
             company="Hjúkrunarheimilið Hjallatún",
-            deadline="2019-05-31",
+            deadline="2020-05-31",
             description="<p> </p><p></p>\n<p>\xa0</p>\n<p>\xa0</p>\n<p>Staða hjúkrunarfræðings</p>\n<p>"
             "Hjúkrunarfræðingur óskast til starfa við Hjúkrunarheimilið Hjallatún í Vík. Um er að ræða 80 % "
             "stöðu verkefnisstjóra 2, \xa0sem vinnur dagvaktir, kvöldvaktir og bakvaktir eftir samkomulagi. "
@@ -90,7 +90,7 @@ def test_mbl_parse_specific_job():
             "hjúkrunarfræðinga. Gott húsnæði á staðnum.</p>\n<p>\xa0</p>\n<p>Allar nánari upplýsingar veitir: "
             'Guðrún Berglind Jóhannesdóttir hjúkrunarforstjóri, <a href="mailto:hjallatun@vik.is">'
             "hjallatun@vik.is</a> eða í síma 487-1348.\xa0</p>\n<p>\xa0</p>",
-            posted="2019-04-02",
+            posted="2020-04-02",
             title="Hjúkrunarfræðingur",
         )
     ]
