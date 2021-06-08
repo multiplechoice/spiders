@@ -2,4 +2,4 @@ Scrapy==2.4.1
 bleach==3.2.1
 python-dateutil==2.8.1
 git+https://github.com/multiplechoice/sqlalchemy-mappings.git@661a6f6cdfa02d8e64ba3b30edb07aa102e9ad19
-Pillow==8.0.1
+Pillow==8.2.0
