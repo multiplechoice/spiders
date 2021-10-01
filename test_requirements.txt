@@ -2,5 +2,5 @@ pytest==6.2.5
 pytest-cov==2.12.1
 freezegun==1.1.0
 boto3==1.18.52
-moto==1.3.16
+moto==2.2.8
 mock==4.0.3
